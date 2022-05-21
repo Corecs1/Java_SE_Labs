@@ -7,12 +7,11 @@ public class DwellingFloor {
 
     // Конструктор, принимающий количество квартир на этаже.
     public DwellingFloor(int amountOfFlats) {
-        Flat[] flats = new Flat[amountOfFlats];
+        arrayOfFlats = new Flat[amountOfFlats];
 
-        for (int i = 0; i < flats.length; i++) {
-            flats[i] = new Flat();
+        for (int i = 0; i < arrayOfFlats.length; i++) {
+            arrayOfFlats[i] = new Flat();
         }
-
         this.amountOfFlats = amountOfFlats;
     }
 
@@ -29,7 +28,6 @@ public class DwellingFloor {
         for (Flat flat : arrayOfFlats) {
             count += flat.getArea();
         }
-
         return count;
     }
 
@@ -40,7 +38,6 @@ public class DwellingFloor {
         for (Flat flat : arrayOfFlats) {
             count += flat.getAmountOfRooms();
         }
-
         return count;
     }
 
@@ -60,42 +57,43 @@ public class DwellingFloor {
         if (flatNumber >= arrayOfFlats.length) {
             System.out.println("There is no flat with number = " + flatNumber);
         }
-
         return arrayOfFlats[flatNumber] = flat;
     }
 
-//    Добавление квартиры по id?
+    //    Добавление квартиры по id и ссылке на объект квартиры
+    public void addNewFlat(int flatNumber, Flat newFlat) {
 
+        if (flatNumber > arrayOfFlats.length) {
+            System.out.println("You could not add new Flat = " + flatNumber);
+        } else {
+            Flat[] newFlats = new Flat[arrayOfFlats.length + 1];
+            for (int i = 0, j = 0; i <= arrayOfFlats.length; i++) {
+                if (i != flatNumber) {
+                    newFlats[i] = arrayOfFlats[j++];
+                } else {
+                    newFlats[i] = newFlat;
+                }
+            }
+            amountOfFlats++;
+            arrayOfFlats = newFlats;
+        }
+    }
 
     // Метод удаления квартиры по ее номеру на этаже.
     public void deleteFlat(int flatNumber) {
 
         if (flatNumber >= arrayOfFlats.length) {
             System.out.println("There is no flat with number = " + flatNumber);
-        }
-
-        Flat[] newFlats = null;
-
-        for (int i = 0; i < arrayOfFlats.length - 1; i++) {
-            if(i == flatNumber) {
-                newFlats = new Flat[arrayOfFlats.length - 1];
-                for (int index = 0; index < i; index++) {
-                    newFlats[index] = arrayOfFlats[index];
+        } else {
+            Flat[] newFlats = new Flat[arrayOfFlats.length - 1];
+            for (int i = 0, j = 0; i < arrayOfFlats.length; i++) {
+                if (i != flatNumber) {
+                    newFlats[j++] = arrayOfFlats[i];
                 }
-                for (int j = i; j < arrayOfFlats.length - 1; j++) {
-                    newFlats[j] = arrayOfFlats[j + 1];
-                }
-                break;
             }
+            amountOfFlats--;
+            arrayOfFlats = newFlats;
         }
-
-        arrayOfFlats = newFlats;
-
-//        for (int i = 0, j = 0; i < arrayOfFlats.length; i++) {
-//            if (i != flatNumber) {
-//                arrayOfFlats[j++] = arrayOfFlats[i];
-//            }
-//        }
     }
 
     // Метод получения самой большой по площади квартиры этажа
@@ -107,13 +105,13 @@ public class DwellingFloor {
                 flat = iteratedFlat;
             }
         }
-
         return flat;
     }
 
     // Вывод на экран всех квартир
-    public void showAllFlats(Flat[] flats) {
-        for (Flat flat : flats) {
+    public void showAllFlats() {
+
+        for (Flat flat : arrayOfFlats) {
             System.out.println(flat);
         }
     }

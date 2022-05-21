@@ -1,7 +1,10 @@
 package com.corecs.javase;
 
+import com.corecs.javase.buildings.Dwelling;
 import com.corecs.javase.buildings.DwellingFloor;
 import com.corecs.javase.buildings.Flat;
+
+import java.util.Arrays;
 
 public class Main {
 
@@ -16,21 +19,24 @@ public class Main {
 
         Flat[] flats = {flat1, flat2, flat3, flat4, flat5, flat6};
 
-        DwellingFloor dwellingFloor = new DwellingFloor(flats);
-        System.out.println(dwellingFloor.getTotalFloorArea());
-        System.out.println(dwellingFloor.getTotalAmountOfRooms());
-        dwellingFloor.getBestSpace();
+        DwellingFloor dwellingFloor1 = new DwellingFloor(flats);
+        DwellingFloor dwellingFloor2 = new DwellingFloor(4);
+        DwellingFloor dwellingFloor3 = new DwellingFloor(6);
 
-        System.out.println(dwellingFloor.getBestSpace());
+        DwellingFloor[] dwellingFloors = {dwellingFloor1, dwellingFloor2, dwellingFloor3};
+
+        Dwelling dwelling = new Dwelling(dwellingFloors);
+        System.out.println(dwelling.getAmountOfDwellingFloors());
+        System.out.println(dwelling.getTotalAmountOfFlats());
+        System.out.println(dwelling.getTotalAreaOfFlats());
+        System.out.println(dwelling.getTotalAmountOfRoomsFlats());
+        System.out.println(Arrays.toString(dwelling.getDwellingFloor(0).getArrayOfFlats()));
+
+        System.out.println(dwelling.getBiggestAreaFlatAtDwelling());
         System.out.println();
 
-        dwellingFloor.showAllFlats(flats);
-        System.out.println();
+        System.out.println(Arrays.toString(dwelling.getDwellingFloor(0).getArrayOfFlats()));
 
-        dwellingFloor.deleteFlat(2);
-        System.out.println();
-
-        dwellingFloor.showAllFlats(flats);
 
 
     }
