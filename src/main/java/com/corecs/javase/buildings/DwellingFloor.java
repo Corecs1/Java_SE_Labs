@@ -8,7 +8,6 @@ public class DwellingFloor {
     // Конструктор, принимающий количество квартир на этаже.
     public DwellingFloor(int amountOfFlats) {
         arrayOfFlats = new Flat[amountOfFlats];
-
         for (int i = 0; i < arrayOfFlats.length; i++) {
             arrayOfFlats[i] = new Flat();
         }
@@ -24,7 +23,6 @@ public class DwellingFloor {
     // Метод получения общей площади квартир этажа.
     public int getTotalFloorArea() {
         int count = 0;
-
         for (Flat flat : arrayOfFlats) {
             count += flat.getArea();
         }
@@ -34,7 +32,6 @@ public class DwellingFloor {
     // Метод получения общего количества комнат этажа.
     public int getTotalAmountOfRooms() {
         int count = 0;
-
         for (Flat flat : arrayOfFlats) {
             count += flat.getAmountOfRooms();
         }
@@ -53,7 +50,6 @@ public class DwellingFloor {
 
     // Метод изменения квартиры по ее номеру на этаже и ссылке на новую квартиру.
     public Flat changeFlat(int flatNumber, Flat flat) {
-
         if (flatNumber >= arrayOfFlats.length) {
             System.out.println("There is no flat with number = " + flatNumber);
         }
@@ -62,7 +58,6 @@ public class DwellingFloor {
 
     //    Добавление квартиры по id и ссылке на объект квартиры
     public void addNewFlat(int flatNumber, Flat newFlat) {
-
         if (flatNumber > arrayOfFlats.length) {
             System.out.println("You could not add new Flat = " + flatNumber);
         } else {
@@ -81,7 +76,6 @@ public class DwellingFloor {
 
     // Метод удаления квартиры по ее номеру на этаже.
     public void deleteFlat(int flatNumber) {
-
         if (flatNumber >= arrayOfFlats.length) {
             System.out.println("There is no flat with number = " + flatNumber);
         } else {
@@ -99,7 +93,6 @@ public class DwellingFloor {
     // Метод получения самой большой по площади квартиры этажа
     public Flat getBestSpace() {
         Flat flat = arrayOfFlats[0];
-
         for (Flat iteratedFlat : arrayOfFlats) {
             if (iteratedFlat.getArea() > flat.getArea()) {
                 flat = iteratedFlat;
@@ -110,7 +103,6 @@ public class DwellingFloor {
 
     // Вывод на экран всех квартир
     public void showAllFlats() {
-
         for (Flat flat : arrayOfFlats) {
             System.out.println(flat);
         }

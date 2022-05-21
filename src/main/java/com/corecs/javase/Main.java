@@ -31,6 +31,7 @@ public class Main {
         System.out.println(dwelling.getTotalAreaOfFlats());
         System.out.println(dwelling.getTotalAmountOfRoomsFlats());
         System.out.println(Arrays.toString(dwelling.getDwellingFloor(0).getArrayOfFlats()));
+        dwelling.updateFlat(3, new Flat(600, 10));
 
         System.out.println(dwelling.getBiggestAreaFlatAtDwelling());
         System.out.println();
