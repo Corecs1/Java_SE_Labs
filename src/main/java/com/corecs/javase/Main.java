@@ -26,19 +26,25 @@ public class Main {
         DwellingFloor[] dwellingFloors = {dwellingFloor1, dwellingFloor2, dwellingFloor3};
 
         Dwelling dwelling = new Dwelling(dwellingFloors);
-        System.out.println(dwelling.getAmountOfDwellingFloors());
-        System.out.println(dwelling.getTotalAmountOfFlats());
-        System.out.println(dwelling.getTotalAreaOfFlats());
-        System.out.println(dwelling.getTotalAmountOfRoomsFlats());
-        System.out.println(Arrays.toString(dwelling.getDwellingFloor(0).getArrayOfFlats()));
-        dwelling.updateFlat(3, new Flat(600, 10));
+        System.out.println(dwelling.getFlat(6));
+        System.out.println(Arrays.toString(dwelling.getDwellingFloor(1).getArrayOfFlats()));
+        dwelling.updateFlat(7, new Flat(600, 10));
+        dwelling.updateFlat(12, new Flat(1600, 10));
 
         System.out.println(dwelling.getBiggestAreaFlatAtDwelling());
         System.out.println();
 
-        System.out.println(Arrays.toString(dwelling.getDwellingFloor(0).getArrayOfFlats()));
+        System.out.println(Arrays.toString(dwelling.getDwellingFloor(1).getArrayOfFlats()));
 
+        System.out.println(dwelling.getBiggestAreaFlatAtDwelling());
 
+        System.out.println(Arrays.toString(dwelling.getFlatArraySortedByArea()));
+
+//        int[] floors = {2,3,2};
+//        Dwelling dwelling = new Dwelling(floors, 3);
+//        System.out.println(dwelling.getAmountOfDwellingFloors());
+//        System.out.println(dwelling.getTotalAmountOfFlats());
+//        System.out.println(dwelling.getTotalAmountOfRoomsFlats());
 
     }
 }

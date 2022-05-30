@@ -1,18 +1,19 @@
 package com.corecs.javase.buildings;
 
+import java.util.Arrays;
+
 public class Dwelling {
 
     private DwellingFloor[] dwellingFloors;
     private int amountOfDwellingFloors;
 
     // Конструктор принимающий количество этажей и массив количества квартир по этажам.
-    public Dwelling(Flat[] arrayOfFlats, int amountOfDwellingFloors) {
-        DwellingFloor[] newDwellingFloors = new DwellingFloor[amountOfDwellingFloors];
-        for (int i = 0; i < newDwellingFloors.length; i++) {
-            newDwellingFloors[i] = new DwellingFloor(arrayOfFlats);
-        }
-        this.dwellingFloors = newDwellingFloors;
+    public Dwelling(int[] arrayAmountOfFlats, int amountOfDwellingFloors) {
         this.amountOfDwellingFloors = amountOfDwellingFloors;
+        this.dwellingFloors = new DwellingFloor[amountOfDwellingFloors];
+        for (int i = 0; i < dwellingFloors.length; i++) {
+            dwellingFloors[i] = new DwellingFloor(arrayAmountOfFlats[i]);
+        }
     }
 
     // Конструктор принимающий массив этажей дома.
@@ -77,85 +78,48 @@ public class Dwelling {
     //    Метод получения объекта квартиры по ее номеру в доме.
     public Flat getFlat(int flatNumber) {
         Flat flat = null;
-        int count = 0;
-        for (int i = 0; i < dwellingFloors.length; i++) {
-            if (flat == null) {
-                for (int j = 0; j < dwellingFloors[i].getArrayOfFlats().length; j++) {
-                    if (flatNumber != count) {
-                        count++;
-                    } else {
-                        flat = dwellingFloors[i].getArrayOfFlats()[j];
-                        break;
-                    }
-                }
-            } else break;
+        for (DwellingFloor dwellingFloor : dwellingFloors) {
+            if (dwellingFloor.getAmountOfFlats() > flatNumber) {
+                flat = dwellingFloor.getArrayOfFlats()[flatNumber];
+                break;
+            } else {
+                flatNumber -= dwellingFloor.getAmountOfFlats();
+            }
         }
         return flat;
     }
 
     //    Метод изменения объекта квартиры по ее номеру в доме и ссылке на объект квартиры.
     public void updateFlat(int flatNumber, Flat flat) {
-        Flat newFlat = null;
-        int count = 0;
-        for (int i = 0; i < dwellingFloors.length; i++) {
-            if (newFlat == null) {
-                for (int j = 0; j < dwellingFloors[i].getArrayOfFlats().length; j++) {
-                    if (flatNumber != count) {
-                        count++;
-                    } else {
-                        dwellingFloors[i].getArrayOfFlats()[j] = flat;
-                        newFlat = dwellingFloors[i].getArrayOfFlats()[j];
-                        break;
-                    }
-                }
-            } else break;
+        for (DwellingFloor dwellingFloor : dwellingFloors) {
+            if (dwellingFloor.getAmountOfFlats() > flatNumber) {
+                dwellingFloor.getArrayOfFlats()[flatNumber] = flat;
+                break;
+            } else {
+                flatNumber -= dwellingFloor.getAmountOfFlats();
+            }
         }
     }
 
-    //    Метод добавления квартиры в дом по будущему номеру квартиры в доме  и ссылке на объект квартиры.
+    //    Метод добавления квартиры в дом по будущему номеру квартиры в доме и ссылке на объект квартиры.
     public void addFlat(int flatNumber, Flat flat) {
-        if (flatNumber > getTotalAmountOfFlats()) {
-            System.out.println("You could not add new Flat");
-        } else {
-            int count = 0;
-
-            for (int i = 0; i < dwellingFloors.length; i++) {
-                if (count > flatNumber) {
-                    break;
-                } else {
-                    for (int j = 0; j <= dwellingFloors[i].getArrayOfFlats().length; j++) {
-                        if (count != flatNumber) {
-                            count++;
-                        } else {
-                            dwellingFloors[i].addNewFlat(j, flat);
-                            break;
-                        }
-                    }
-                }
+        for (DwellingFloor dwellingFloor : dwellingFloors) {
+            if (dwellingFloor.getAmountOfFlats() > flatNumber) {
+                dwellingFloor.addNewFlat(flatNumber, flat);
+                break;
+            } else {
+                flatNumber -= dwellingFloor.getAmountOfFlats();
             }
         }
     }
 
     //    Метод удаления квартиры по ее номеру в доме.
     public void deleteFlat(int flatNumber) {
-        if (flatNumber > getTotalAmountOfFlats()) {
-            System.out.println("You could not add new Flat");
-        } else {
-            int count = 0;
-
-            for (int i = 0; i < dwellingFloors.length; i++) {
-                if (count > flatNumber) {
-                    break;
-                } else {
-                    for (int j = 0; j <= dwellingFloors[i].getArrayOfFlats().length; j++) {
-                        if (count != flatNumber) {
-                            count++;
-                        } else {
-                            dwellingFloors[i].deleteFlat(j);
-                            break;
-                        }
-                    }
-                }
+        for (DwellingFloor dwellingFloor : dwellingFloors) {
+            if (dwellingFloor.getAmountOfFlats() > flatNumber) {
+                dwellingFloor.deleteFlat(flatNumber);
+            } else {
+                flatNumber -= dwellingFloor.getAmountOfFlats();
             }
         }
     }
@@ -163,11 +127,9 @@ public class Dwelling {
     //    Метод получения самой большой по площади квартиры дома.
     public Flat getBiggestAreaFlatAtDwelling() {
         Flat flat = new Flat();
-        for (int i = 0; i < dwellingFloors.length; i++) {
-            for (int j = 0; j < dwellingFloors[i].getArrayOfFlats().length; j++) {
-                if (dwellingFloors[i].getArrayOfFlats()[j].getArea() > flat.getArea()) {
-                    flat = dwellingFloors[i].getArrayOfFlats()[j];
-                }
+        for (DwellingFloor dwellingFloor : dwellingFloors) {
+            if (dwellingFloor.getBestSpace().getArea() > flat.getArea()) {
+                flat = dwellingFloor.getBestSpace();
             }
         }
         return flat;
@@ -176,6 +138,28 @@ public class Dwelling {
     //    Метод получения отсортированного по убыванию площадей массива квартир.
     public Flat[] getFlatArraySortedByArea() {
         Flat[] newArrayFlats = new Flat[getTotalAmountOfFlats()];
-        return null;
+        int count = 0;
+        boolean isSort = false;
+
+        for (int i = 0; i < dwellingFloors.length; i++) {
+            for (int j = 0; j < dwellingFloors[i].getArrayOfFlats().length; j++) {
+                newArrayFlats[count++] = dwellingFloors[i].getArrayOfFlats()[j];
+            }
+        }
+
+        while (!isSort) {
+            isSort = true;
+            for (int i = 0; i < newArrayFlats.length - 1; i++) {
+                if (newArrayFlats[i].getArea() < newArrayFlats[i + 1].getArea()) {
+                    isSort = false;
+                    Flat bufferFlat = newArrayFlats[i];
+                    newArrayFlats[i] = newArrayFlats[i + 1];
+                    newArrayFlats[i + 1] = bufferFlat;
+                }
+            }
+        }
+        return newArrayFlats;
     }
 }
+
+

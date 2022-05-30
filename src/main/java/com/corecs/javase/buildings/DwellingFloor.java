@@ -7,7 +7,7 @@ public class DwellingFloor {
 
     // Конструктор, принимающий количество квартир на этаже.
     public DwellingFloor(int amountOfFlats) {
-        arrayOfFlats = new Flat[amountOfFlats];
+        this.arrayOfFlats = new Flat[amountOfFlats];
         for (int i = 0; i < arrayOfFlats.length; i++) {
             arrayOfFlats[i] = new Flat();
         }
