@@ -1,7 +1,6 @@
-package com.corecs.javase.buildings;
+package com.corecs.javase.buildings.dwelling;
 
 public class Flat {
-
     private int area;
     private int amountOfRooms;
     private static final int DEFAULT_AREA = 50;

@@ -1,9 +1,6 @@
-package com.corecs.javase.buildings;
-
-import java.util.Arrays;
+package com.corecs.javase.buildings.dwelling;
 
 public class Dwelling {
-
     private DwellingFloor[] dwellingFloors;
     private int amountOfDwellingFloors;
 

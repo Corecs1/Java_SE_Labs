@@ -1,4 +1,4 @@
-import com.corecs.javase.buildings.Flat;
+import com.corecs.javase.buildings.dwelling.Flat;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

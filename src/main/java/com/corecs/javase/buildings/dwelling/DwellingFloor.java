@@ -1,7 +1,6 @@
-package com.corecs.javase.buildings;
+package com.corecs.javase.buildings.dwelling;
 
 public class DwellingFloor {
-
     private int amountOfFlats;
     private Flat[] arrayOfFlats;
 
