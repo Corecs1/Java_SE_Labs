@@ -29,4 +29,9 @@ public class Node {
     public void setOffice(Office office) {
         this.office = office;
     }
+
+    @Override
+    public String toString() {
+        return "Node{" + office + '}';
+    }
 }

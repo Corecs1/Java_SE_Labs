@@ -10,30 +10,67 @@ public class OfficeFloorList {
     public OfficeFloorList() {
     }
 
+    // Метод добавления офиса
     public int size() {
         return size;
     }
 
+    // Метод добавления офиса в начало
+    public void addFirst(Office office) {
+        head.setNext(new Node(head.getNext(), office));
+        size++;
+    }
+
+    // Метод добавления офиса в конец
+    public void addLast(Office office) {
+        Node temp = new Node(head.getNext(), office);
+        head.setNext(temp);
+        head = head.getNext();
+        size++;
+    }
+
+    // Если элементов нет, то создаёт головной элемент
+    private void addHead(Office office) {
+        head = new Node(null, office);
+        head.setNext(head);
+        size++;
+    }
+
     // Метод добавления офиса
-    public void addOffice(Office office) {
+    public boolean addOffice(Office office) {
         if (head == null) {
-            head = new Node(null, office);
-            head.setNext(head);
-            size++;
+            addHead(office);
         } else {
-            Node temp = new Node(head.getNext(), office);
-            head.setNext(temp);
-            head = head.getNext();
-            size++;
+            addLast(office);
         }
+        return true;
     }
 
     // Метод получения по индексу
+    public Node get(int index) {
+        Node ref = head.getNext();
+        for (int i = 0; i < index; i++) {
+            ref = ref.getNext();
+        }
+        return ref;
+    }
 
-    // Метод добавления по индексу
+    // Метод добавления офиса по индексу
+    public boolean addOffice(int index, Office office) {
+        if (index == 0) {
+            addFirst(office);
+        } else if (index == (size - 1)) {
+            addLast(office);
+        } else {
+            Node ref = get(index - 1);
+            ref.setNext(new Node(ref.getNext(), office));
+            size++;
+        }
+        return true;
+    }
 
     public void print() {
-        Node ref = head;
+        Node ref = head.getNext();
         for (int i = 0; i < size; i++) {
             System.out.println(ref.getOffice());
             ref = ref.getNext();

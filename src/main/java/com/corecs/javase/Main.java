@@ -63,6 +63,10 @@ public class Main {
         list.addOffice(office4);
         list.addOffice(office5);
         list.print();
+        System.out.println(list.get(3));
+        System.out.println();
+        list.addOffice(3,new Office(1000, 15));
+        list.print();
 
     }
 }
