@@ -14,11 +14,11 @@ public class Node {
         this.office = office;
     }
 
-    public Node getNext() {
+    protected Node getNext() {
         return next;
     }
 
-    public void setNext(Node next) {
+    protected void setNext(Node next) {
         this.next = next;
     }
 

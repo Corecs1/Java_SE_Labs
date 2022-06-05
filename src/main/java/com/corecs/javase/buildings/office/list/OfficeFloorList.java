@@ -57,9 +57,11 @@ public class OfficeFloorList {
 
     // Метод добавления офиса по индексу
     public boolean addOffice(int index, Office office) {
-        if (index == 0) {
+        if (index == 0 && head == null) {
+            addHead(office);
+        } else if (index == 0) {
             addFirst(office);
-        } else if (index == (size - 1)) {
+        } else if (index == (size)) {
             addLast(office);
         } else {
             Node ref = get(index - 1);
@@ -68,6 +70,25 @@ public class OfficeFloorList {
         }
         return true;
     }
+
+//    public void deleteFirst() {
+//        head.setNext(head.getNext().getNext());
+//    }
+
+//    public void delete() {
+//        head = get(size - 2);
+//        head.setNext(head.getNext().getNext());
+//    }
+//
+//    public boolean delete(int index) {
+//        if (index == 0) {
+//            deleteFirst();
+//        } else {
+//            head = get(index - 1);
+//            head.setNext(head.getNext().getNext());
+//        }
+//        return true;
+//    }
 
     public void print() {
         Node ref = head.getNext();
