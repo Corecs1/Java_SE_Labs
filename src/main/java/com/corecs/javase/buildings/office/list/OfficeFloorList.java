@@ -71,24 +71,21 @@ public class OfficeFloorList {
         return true;
     }
 
-//    public void deleteFirst() {
-//        head.setNext(head.getNext().getNext());
-//    }
+    public void deleteFirst() {
+        head.setNext(head.getNext().getNext());
+        size--;
+    }
 
-//    public void delete() {
-//        head = get(size - 2);
-//        head.setNext(head.getNext().getNext());
-//    }
-//
-//    public boolean delete(int index) {
-//        if (index == 0) {
-//            deleteFirst();
-//        } else {
-//            head = get(index - 1);
-//            head.setNext(head.getNext().getNext());
-//        }
-//        return true;
-//    }
+    public boolean delete(int index) {
+        if (index == 0) {
+            deleteFirst();
+        } else {
+            Node ref = get(index - 1);
+            ref.setNext(ref.getNext().getNext());
+            size--;
+        }
+        return true;
+    }
 
     public void print() {
         Node ref = head.getNext();

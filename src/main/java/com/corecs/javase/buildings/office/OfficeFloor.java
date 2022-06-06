@@ -69,11 +69,20 @@ public class OfficeFloor {
         return true;
     }
 
-//    Метод удаления офиса по его номеру на этаже.
-//    public boolean delete(int index) {
-//        list.delete(index);
-//        return true;
-//    }
+    //Метод удаления офиса по его номеру на этаже.
+    public boolean delete(int index) {
+        list.delete(index);
+        return true;
+    }
 
-//    Метод getBestSpace() получения самого большого по площади офиса этажа.
+    //    Метод getBestSpace() получения самого большого по площади офиса этажа.
+    public Office getBestSpace() {
+        Office bestSpaceOffice = list.get(0).getOffice();
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getOffice().getArea() > bestSpaceOffice.getArea()) {
+                bestSpaceOffice = list.get(i).getOffice();
+            }
+        }
+        return bestSpaceOffice;
+    }
 }

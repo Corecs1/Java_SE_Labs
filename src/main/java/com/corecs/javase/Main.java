@@ -94,9 +94,10 @@ public class Main {
         officeFloor.addOffice(2, new Office(150, 4));
         System.out.println(officeFloor.getAmountOfOffices());
         System.out.println(Arrays.toString(officeFloor.getOfficesArray()));
-        officeFloor.delete(0);
+        officeFloor.delete(5);
         System.out.println(officeFloor.getAmountOfOffices());
         System.out.println(Arrays.toString(officeFloor.getOfficesArray()));
+        System.out.println(officeFloor.getBestSpace());
 
     }
 }
