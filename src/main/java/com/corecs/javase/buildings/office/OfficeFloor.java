@@ -1,23 +1,23 @@
 package com.corecs.javase.buildings.office;
 
-import com.corecs.javase.buildings.office.list.OfficeFloorList;
+import com.corecs.javase.buildings.office.list.officeFloorList.Node;
+import com.corecs.javase.buildings.office.list.officeFloorList.OfficeFloorList;
 
 public class OfficeFloor {
     //Работа класса основана на односвязном циклическом списке офисов с выделенной головой
-    OfficeFloorList list = new OfficeFloorList();
+    private OfficeFloorList list = new OfficeFloorList();
 
-    //    Приватный метод удаления узла из списка по его номеру.
-//    Конструктор принимающий количество офисов на этаже.
+    //    Конструктор принимающий количество офисов на этаже.
     public OfficeFloor(int amountOfOffices) {
         for (int i = 0; i < amountOfOffices; i++) {
-            list.addOffice(new Office());
+            this.list.addOffice(new Office());
         }
     }
 
     //    Конструктор принимающий массив офисов этажа.
     public OfficeFloor(Office[] offices) {
         for (int i = 0; i < offices.length; i++) {
-            list.addOffice(i, offices[i]);
+            this.list.addOffice(i, offices[i]);
         }
     }
 
@@ -60,6 +60,7 @@ public class OfficeFloor {
 
     //    Метод изменения офиса по его номеру на этаже и ссылке на обновленный офис.
     public boolean setOffice(int number, Office office) {
+        list.set(number, office);
         return true;
     }
 
@@ -69,7 +70,7 @@ public class OfficeFloor {
         return true;
     }
 
-    //Метод удаления офиса по его номеру на этаже.
+    //    Метод удаления офиса по его номеру на этаже.
     public boolean delete(int index) {
         list.delete(index);
         return true;
@@ -84,5 +85,9 @@ public class OfficeFloor {
             }
         }
         return bestSpaceOffice;
+    }
+
+    public void print() {
+        list.print();
     }
 }

@@ -1,4 +1,4 @@
-package com.corecs.javase.buildings.office.list;
+package com.corecs.javase.buildings.office.list.officeFloorList;
 
 import com.corecs.javase.buildings.office.Office;
 
@@ -22,7 +22,7 @@ public class OfficeFloorList {
     }
 
     // Метод добавления офиса в конец
-    public void addLast(Office office) {
+    private void addLast(Office office) {
         Node temp = new Node(head.getNext(), office);
         head.setNext(temp);
         head = head.getNext();
@@ -71,11 +71,13 @@ public class OfficeFloorList {
         return true;
     }
 
+    // Удаление первого элемента
     public void deleteFirst() {
         head.setNext(head.getNext().getNext());
         size--;
     }
 
+    // Метод удаления офиса по номеру на этаже
     public boolean delete(int index) {
         if (index == 0) {
             deleteFirst();
@@ -84,6 +86,12 @@ public class OfficeFloorList {
             ref.setNext(ref.getNext().getNext());
             size--;
         }
+        return true;
+    }
+
+    public boolean set(int index, Office office) {
+        Node ref = get(index);
+        ref.setOffice(office);
         return true;
     }
 

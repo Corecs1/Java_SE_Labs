@@ -1,4 +1,4 @@
-package com.corecs.javase.buildings.office.list;
+package com.corecs.javase.buildings.office.list.officeFloorList;
 
 import com.corecs.javase.buildings.office.Office;
 

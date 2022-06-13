@@ -5,7 +5,7 @@ public class Dwelling {
     private int amountOfDwellingFloors;
 
     // Конструктор принимающий количество этажей и массив количества квартир по этажам.
-    public Dwelling(int[] arrayAmountOfFlats, int amountOfDwellingFloors) {
+    public Dwelling(int amountOfDwellingFloors, int[] arrayAmountOfFlats) {
         this.amountOfDwellingFloors = amountOfDwellingFloors;
         this.dwellingFloors = new DwellingFloor[amountOfDwellingFloors];
         for (int i = 0; i < dwellingFloors.length; i++) {
@@ -137,13 +137,11 @@ public class Dwelling {
         Flat[] newArrayFlats = new Flat[getTotalAmountOfFlats()];
         int count = 0;
         boolean isSort = false;
-
         for (int i = 0; i < dwellingFloors.length; i++) {
             for (int j = 0; j < dwellingFloors[i].getArrayOfFlats().length; j++) {
                 newArrayFlats[count++] = dwellingFloors[i].getArrayOfFlats()[j];
             }
         }
-
         while (!isSort) {
             isSort = true;
             for (int i = 0; i < newArrayFlats.length - 1; i++) {

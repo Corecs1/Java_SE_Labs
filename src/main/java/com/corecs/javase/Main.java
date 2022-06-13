@@ -1,15 +1,10 @@
 package com.corecs.javase;
 
-import com.corecs.javase.buildings.dwelling.Dwelling;
-import com.corecs.javase.buildings.dwelling.DwellingFloor;
-import com.corecs.javase.buildings.dwelling.Flat;
 import com.corecs.javase.buildings.office.Office;
 import com.corecs.javase.buildings.office.OfficeFloor;
-import com.corecs.javase.buildings.office.list.OfficeFloorList;
+import com.corecs.javase.buildings.office.list.officeBuildingList.OfficeBuildingList;
 
 import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
 
 public class Main {
 
@@ -76,7 +71,7 @@ public class Main {
 //        list.print();
 
         /*
-        OfficeFloor test
+        OfficeFloorList test
          */
         Office office1 = new Office();
         Office office2 = new Office(310);
@@ -85,19 +80,34 @@ public class Main {
         Office office5 = new Office(600, 8);
 
         Office[] offices = {office1, office2, office3, office4, office5};
+        Office[] offices1 = {new Office(240, 3), new Office(500, 1), new Office(160, 1)};
 
-        OfficeFloor officeFloor = new OfficeFloor(offices);
-        System.out.println(officeFloor.getAmountOfOffices());
-        System.out.println(officeFloor.getTotalArea());
-        System.out.println(officeFloor.getOffice(4));
-        System.out.println(Arrays.toString(officeFloor.getOfficesArray()));
-        officeFloor.addOffice(2, new Office(150, 4));
-        System.out.println(officeFloor.getAmountOfOffices());
-        System.out.println(Arrays.toString(officeFloor.getOfficesArray()));
-        officeFloor.delete(5);
-        System.out.println(officeFloor.getAmountOfOffices());
-        System.out.println(Arrays.toString(officeFloor.getOfficesArray()));
-        System.out.println(officeFloor.getBestSpace());
+        OfficeFloor officeFloor1 = new OfficeFloor(2);
+        OfficeFloor officeFloor2 = new OfficeFloor(offices);
+        OfficeFloor officeFloor3 = new OfficeFloor(offices1);
+//        System.out.println(officeFloor2.getAmountOfOffices());
+//        System.out.println(officeFloor2.getTotalArea());
+//        System.out.println(officeFloor2.getOffice(4));
+//        System.out.println(Arrays.toString(officeFloor2.getOfficesArray()));
+//        officeFloor2.addOffice(2, new Office(150, 4));
+//        System.out.println(officeFloor2.getAmountOfOffices());
+//        System.out.println(Arrays.toString(officeFloor2.getOfficesArray()));
+//        officeFloor2.delete(5);
+//        System.out.println(officeFloor2.getAmountOfOffices());
+//        System.out.println(Arrays.toString(officeFloor2.getOfficesArray()));
+//        System.out.println(officeFloor2.getBestSpace());
+//        officeFloor2.setOffice(4, new Office(1000, 200));
+//        System.out.println(Arrays.toString(officeFloor2.getOfficesArray()));
+
+        OfficeBuildingList officeBuildingList = new OfficeBuildingList();
+        officeBuildingList.addBuilding(officeFloor1);
+        officeBuildingList.addBuilding(0, officeFloor2);
+        officeBuildingList.addBuilding(officeFloor3);
+        System.out.println(officeBuildingList.size());
+        officeBuildingList.print();
+        System.out.println();
+        officeBuildingList.remove(1);
+        officeBuildingList.print();
 
     }
 }
