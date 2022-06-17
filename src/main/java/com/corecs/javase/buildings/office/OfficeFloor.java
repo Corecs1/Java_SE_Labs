@@ -1,9 +1,11 @@
 package com.corecs.javase.buildings.office;
 
-import com.corecs.javase.buildings.office.list.officeFloorList.Node;
+import com.corecs.javase.buildings.interfaces.Floor;
+import com.corecs.javase.buildings.interfaces.Space;
 import com.corecs.javase.buildings.office.list.officeFloorList.OfficeFloorList;
+import com.corecs.javase.exceptions.SpaceIndexOutOfBoundsException;
 
-public class OfficeFloor {
+public class OfficeFloor implements Floor {
     //Работа класса основана на односвязном циклическом списке офисов с выделенной головой
     private OfficeFloorList list = new OfficeFloorList();
 
@@ -22,12 +24,14 @@ public class OfficeFloor {
     }
 
     //    Метод получения количества офисов на этаже.
-    public int getAmountOfOffices() {
+    @Override
+    public int getAmountOfSpaces() {
         return list.size();
     }
 
     //    Метод получения общей площади помещений этажа.
-    public int getTotalArea() {
+    @Override
+    public int getTotalSpaceArea() {
         int totalArea = 0;
         for (int i = 0; i < list.size(); i++) {
             totalArea += list.get(i).getOffice().getArea();
@@ -45,7 +49,8 @@ public class OfficeFloor {
     }
 
     //    Метод получения массива офисов этажа.
-    public Office[] getOfficesArray() {
+    @Override
+    public Office[] getArrayOfSpaces() {
         Office[] offices = new Office[list.size()];
         for (int i = 0; i < list.size(); i++) {
             offices[i] = list.get(i).getOffice();
@@ -54,25 +59,41 @@ public class OfficeFloor {
     }
 
     //    Метод получения офиса по его номеру на этаже.
-    public Office getOffice(int number) {
+    @Override
+    public Office getSpace(int number) {
+        if (number >= list.size() || number < 0) {
+            throw new SpaceIndexOutOfBoundsException();
+        }
         return list.get(number).getOffice();
     }
 
     //    Метод изменения офиса по его номеру на этаже и ссылке на обновленный офис.
-    public boolean setOffice(int number, Office office) {
-        list.set(number, office);
+    @Override
+    public boolean setSpace(int number, Space office) {
+        if (number >= list.size() || number < 0) {
+            throw new SpaceIndexOutOfBoundsException();
+        }
+        list.set(number, (Office) office);
         return true;
     }
 
     //    Метод добавления нового офиса на этаже по будущему номеру офиса.
-    public boolean addOffice(int number, Office office) {
-        list.addOffice(number, office);
+    @Override
+    public boolean addSpace(int number, Space office) {
+        if (number > list.size() || number < 0) {
+            throw new SpaceIndexOutOfBoundsException();
+        }
+        list.addOffice(number, (Office) office);
         return true;
     }
 
     //    Метод удаления офиса по его номеру на этаже.
-    public boolean delete(int index) {
-        list.delete(index);
+    @Override
+    public boolean deleteSpace(int number) {
+        if (number >= list.size() || number < 0) {
+            throw new SpaceIndexOutOfBoundsException();
+        }
+        list.delete(number);
         return true;
     }
 

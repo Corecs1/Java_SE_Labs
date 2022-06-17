@@ -1,6 +1,7 @@
 package com.corecs.javase;
 
 import com.corecs.javase.buildings.office.Office;
+import com.corecs.javase.buildings.office.OfficeBuilding;
 import com.corecs.javase.buildings.office.OfficeFloor;
 import com.corecs.javase.buildings.office.list.officeBuildingList.OfficeBuildingList;
 
@@ -92,22 +93,27 @@ public class Main {
 //        officeFloor2.addOffice(2, new Office(150, 4));
 //        System.out.println(officeFloor2.getAmountOfOffices());
 //        System.out.println(Arrays.toString(officeFloor2.getOfficesArray()));
-//        officeFloor2.delete(5);
+//        officeFloor2.delete(0);
 //        System.out.println(officeFloor2.getAmountOfOffices());
 //        System.out.println(Arrays.toString(officeFloor2.getOfficesArray()));
 //        System.out.println(officeFloor2.getBestSpace());
 //        officeFloor2.setOffice(4, new Office(1000, 200));
 //        System.out.println(Arrays.toString(officeFloor2.getOfficesArray()));
 
-        OfficeBuildingList officeBuildingList = new OfficeBuildingList();
-        officeBuildingList.addBuilding(officeFloor1);
-        officeBuildingList.addBuilding(0, officeFloor2);
-        officeBuildingList.addBuilding(officeFloor3);
-        System.out.println(officeBuildingList.size());
-        officeBuildingList.print();
-        System.out.println();
-        officeBuildingList.remove(1);
-        officeBuildingList.print();
+//        OfficeBuildingList officeBuildingList = new OfficeBuildingList();
+//        officeBuildingList.addBuilding(officeFloor1);
+//        officeBuildingList.addBuilding(0, officeFloor2);
+//        officeBuildingList.addBuilding(officeFloor3);
+//        System.out.println(officeBuildingList.size());
+//        officeBuildingList.print();
+//        System.out.println();
+//        officeBuildingList.remove(1);
+//        officeBuildingList.print();
 
+        OfficeFloor[] officeFloors = {officeFloor1, officeFloor2, officeFloor3};
+        OfficeBuilding officeBuilding = new OfficeBuilding(officeFloors);
+        officeBuilding.addSpace(6,new Office());
+        System.out.println(officeBuilding.getSpace(3));
+        System.out.println(officeBuilding.getFloorsAmount());
     }
 }

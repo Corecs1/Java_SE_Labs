@@ -1,6 +1,8 @@
 package com.corecs.javase.buildings.office;
 
-public class Office {
+import com.corecs.javase.buildings.interfaces.Space;
+
+public class Office implements Space {
     private int area;
     private int amountOfRooms;
     private static final int DEFAULT_AREA = 250;

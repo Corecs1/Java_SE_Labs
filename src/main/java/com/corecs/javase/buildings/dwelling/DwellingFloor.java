@@ -1,6 +1,10 @@
 package com.corecs.javase.buildings.dwelling;
 
-public class DwellingFloor {
+import com.corecs.javase.buildings.interfaces.Floor;
+import com.corecs.javase.buildings.interfaces.Space;
+import com.corecs.javase.exceptions.SpaceIndexOutOfBoundsException;
+
+public class DwellingFloor implements Floor {
     private int amountOfFlats;
     private Flat[] arrayOfFlats;
 
@@ -20,7 +24,8 @@ public class DwellingFloor {
     }
 
     // Метод получения общей площади квартир этажа.
-    public int getTotalFloorArea() {
+    @Override
+    public int getTotalSpaceArea() {
         int count = 0;
         for (Flat flat : arrayOfFlats) {
             count += flat.getArea();
@@ -29,6 +34,7 @@ public class DwellingFloor {
     }
 
     // Метод получения общего количества комнат этажа.
+    @Override
     public int getTotalAmountOfRooms() {
         int count = 0;
         for (Flat flat : arrayOfFlats) {
@@ -38,45 +44,61 @@ public class DwellingFloor {
     }
 
     // Метод получения количества квартир этажа.
-    public int getAmountOfFlats() {
+    @Override
+    public int getAmountOfSpaces() {
         return amountOfFlats;
     }
 
     // Метод получения массива квартир этажа.
-    public Flat[] getArrayOfFlats() {
+    @Override
+    public Flat[] getArrayOfSpaces() {
         return arrayOfFlats;
     }
 
-    // Метод изменения квартиры по ее номеру на этаже и ссылке на новую квартиру.
-    public Flat changeFlat(int flatNumber, Flat flat) {
-        if (flatNumber >= arrayOfFlats.length) {
-            System.out.println("There is no flat with number = " + flatNumber);
+    @Override
+    // Метод получения квартиры по её номеру на этаже.
+    public Flat getSpace(int flatNumber) {
+        if (flatNumber >= arrayOfFlats.length || flatNumber < 0) {
+            throw new SpaceIndexOutOfBoundsException();
         }
-        return arrayOfFlats[flatNumber] = flat;
+        return arrayOfFlats[flatNumber];
+    }
+
+    // Метод изменения квартиры по ее номеру на этаже и ссылке на новую квартиру.
+    @Override
+    public boolean setSpace(int flatNumber, Space flat) {
+        if (flatNumber >= arrayOfFlats.length || flatNumber < 0) {
+            throw new SpaceIndexOutOfBoundsException();
+        }
+        arrayOfFlats[flatNumber] = (Flat) flat;
+        return true;
     }
 
     //    Добавление квартиры по id и ссылке на объект квартиры
-    public void addNewFlat(int flatNumber, Flat newFlat) {
-        if (flatNumber > arrayOfFlats.length) {
-            System.out.println("You could not add new Flat = " + flatNumber);
+    @Override
+    public boolean addSpace(int flatNumber, Space newFlat) {
+        if (flatNumber > arrayOfFlats.length || flatNumber < 0) {
+            throw new SpaceIndexOutOfBoundsException();
         } else {
             Flat[] newFlats = new Flat[arrayOfFlats.length + 1];
             for (int i = 0, j = 0; i <= arrayOfFlats.length; i++) {
                 if (i != flatNumber) {
                     newFlats[i] = arrayOfFlats[j++];
                 } else {
-                    newFlats[i] = newFlat;
+                    newFlats[i] = (Flat) newFlat;
                 }
             }
             amountOfFlats++;
             arrayOfFlats = newFlats;
         }
+        return true;
     }
 
     // Метод удаления квартиры по ее номеру на этаже.
-    public void deleteFlat(int flatNumber) {
-        if (flatNumber >= arrayOfFlats.length) {
-            System.out.println("There is no flat with number = " + flatNumber);
+    @Override
+    public boolean deleteSpace(int flatNumber) {
+        if (flatNumber >= arrayOfFlats.length || flatNumber < 0) {
+            throw new SpaceIndexOutOfBoundsException();
         } else {
             Flat[] newFlats = new Flat[arrayOfFlats.length - 1];
             for (int i = 0, j = 0; i < arrayOfFlats.length; i++) {
@@ -87,9 +109,11 @@ public class DwellingFloor {
             amountOfFlats--;
             arrayOfFlats = newFlats;
         }
+        return true;
     }
 
     // Метод получения самой большой по площади квартиры этажа
+    @Override
     public Flat getBestSpace() {
         Flat flat = arrayOfFlats[0];
         for (Flat iteratedFlat : arrayOfFlats) {

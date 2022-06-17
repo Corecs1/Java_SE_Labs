@@ -1,6 +1,8 @@
 package com.corecs.javase.buildings.dwelling;
 
-public class Flat {
+import com.corecs.javase.buildings.interfaces.Space;
+
+public class Flat implements Space {
     private int area;
     private int amountOfRooms;
     private static final int DEFAULT_AREA = 50;

@@ -1,8 +1,13 @@
 package com.corecs.javase.buildings.office;
 
+import com.corecs.javase.buildings.interfaces.Building;
+import com.corecs.javase.buildings.interfaces.Floor;
+import com.corecs.javase.buildings.interfaces.Space;
 import com.corecs.javase.buildings.office.list.officeBuildingList.OfficeBuildingList;
+import com.corecs.javase.exceptions.FloorIndexOutOfBoundsException;
+import com.corecs.javase.exceptions.SpaceIndexOutOfBoundsException;
 
-public class OfficeBuilding {
+public class OfficeBuilding implements Building {
     //    Работа класса основана на двусвязном циклическом списке этажей с выделенной головой.
     private OfficeBuildingList officeBuildingList = new OfficeBuildingList();
 
@@ -21,30 +26,34 @@ public class OfficeBuilding {
     }
 
     //    Метод получения общего количества этажей здания.
-    public int getAmountOfFloors() {
+    @Override
+    public int getFloorsAmount() {
         return officeBuildingList.size();
     }
 
     //    Создайте метод получения общего количества офисов здания.
-    public int getTotalOfficesOfBuilding() {
+    @Override
+    public int getSpacesAmount() {
         int count = 0;
         for (int i = 0; i < officeBuildingList.size(); i++) {
-            count += officeBuildingList.get(i).getList().getAmountOfOffices();
+            count += officeBuildingList.get(i).getList().getAmountOfSpaces();
         }
         return count;
     }
 
     //    Метод получения общей площади помещений здания.
-    public int getTotalOfficeAreaOfBuilding() {
+    @Override
+    public int getTotalSpacesArea() {
         int count = 0;
         for (int i = 0; i < officeBuildingList.size(); i++) {
-            count += officeBuildingList.get(i).getList().getTotalArea();
+            count += officeBuildingList.get(i).getList().getTotalSpaceArea();
         }
         return count;
     }
 
     //    Метод получения общего количества комнат здания.
-    public int getTotalRoomsAmountOfBuilding() {
+    @Override
+    public int getTotalRoomsAmount() {
         int count = 0;
         for (int i = 0; i < officeBuildingList.size(); i++) {
             count += officeBuildingList.get(i).getList().getTotalAmountOfRooms();
@@ -53,7 +62,8 @@ public class OfficeBuilding {
     }
 
     //    Метод получения массива этажей офисного здания.
-    public OfficeFloor[] getArrayOfFloors() {
+    @Override
+    public OfficeFloor[] getFloorsArray() {
         OfficeFloor[] officeFloors = new OfficeFloor[officeBuildingList.size()];
         for (int i = 0; i < officeBuildingList.size(); i++) {
             officeFloors[i] = officeBuildingList.get(i).getList();
@@ -62,69 +72,95 @@ public class OfficeBuilding {
     }
 
     //    Метод получения объекта этажа, по его номеру в здании.
-    public OfficeFloor getOfficeFloor(int index) {
+    @Override
+    public OfficeFloor getFloor(int index) {
+        if (index >= officeBuildingList.size() || index < 0) {
+            throw new FloorIndexOutOfBoundsException();
+        }
         return officeBuildingList.get(index).getList();
     }
 
     //    Метод изменения этажа по его номеру в здании и ссылке на объект нового этажа.
-    public void updateOfficeFloor(int index, OfficeFloor officeFloor) {
-        officeBuildingList.set(index, officeFloor);
+    @Override
+    public boolean setFloor(int index, Floor officeFloor) {
+        if (index >= officeBuildingList.size() || index < 0) {
+            throw new FloorIndexOutOfBoundsException();
+        }
+        officeBuildingList.set(index, (OfficeFloor) officeFloor);
+        return true;
     }
 
     //    Метод получения объекта офиса по его номеру в офисном здании.
-    public Office getOffice(int index) {
+    @Override
+    public Office getSpace(int index) {
+        if (index >= getSpacesAmount() || index < 0) {
+            throw new SpaceIndexOutOfBoundsException();
+        }
         Office office = null;
         for (int i = 0; i < officeBuildingList.size(); i++) {
-            if (officeBuildingList.get(i).getList().getAmountOfOffices() > index) {
-                office = officeBuildingList.get(i).getList().getOffice(index);
+            if (officeBuildingList.get(i).getList().getAmountOfSpaces() > index) {
+                office = officeBuildingList.get(i).getList().getSpace(index);
                 break;
             } else {
-                index -= officeBuildingList.get(i).getList().getAmountOfOffices();
+                index -= officeBuildingList.get(i).getList().getAmountOfSpaces();
             }
         }
         return office;
     }
 
     //    Метод изменения объекта офиса по его номеру в доме и ссылке на объект офиса.
-    public boolean updateOffice(int index, Office office) {
+    @Override
+    public boolean setSpace(int index, Space office) {
+        if (index >= getSpacesAmount() || index < 0) {
+            throw new SpaceIndexOutOfBoundsException();
+        }
         for (int i = 0; i < officeBuildingList.size(); i++) {
-            if (officeBuildingList.get(i).getList().getAmountOfOffices() > index) {
-                officeBuildingList.get(i).getList().setOffice(index, office);
+            if (officeBuildingList.get(i).getList().getAmountOfSpaces() > index) {
+                officeBuildingList.get(i).getList().setSpace(index, office);
                 break;
             } else {
-                index -= officeBuildingList.get(i).getList().getAmountOfOffices();
+                index -= officeBuildingList.get(i).getList().getAmountOfSpaces();
             }
         }
         return true;
     }
 
     //    Метод добавления офиса в здание по номеру офиса в здании и ссылке на объект офиса.
-    public boolean addOffice(int index, Office office) {
+    @Override
+    public boolean addSpace(int index, Space office) {
+        if (index > getSpacesAmount() || index < 0) {
+            throw new SpaceIndexOutOfBoundsException();
+        }
         for (int i = 0; i < officeBuildingList.size(); i++) {
-            if (officeBuildingList.get(i).getList().getAmountOfOffices() >= index) {
-                officeBuildingList.get(i).getList().addOffice(index, office);
+            if (officeBuildingList.get(i).getList().getAmountOfSpaces() >= index) {
+                officeBuildingList.get(i).getList().addSpace(index, office);
                 break;
             } else {
-                index -= officeBuildingList.get(i).getList().getAmountOfOffices();
+                index -= officeBuildingList.get(i).getList().getAmountOfSpaces();
             }
         }
         return true;
     }
 
     //    Метод удаления офиса по его номеру в здании.
-    public boolean delete(int index) {
+    @Override
+    public boolean removeSpace(int index) {
+        if (index >= getSpacesAmount() || index < 0) {
+            throw new SpaceIndexOutOfBoundsException();
+        }
         for (int i = 0; i < officeBuildingList.size(); i++) {
-            if (officeBuildingList.get(i).getList().getAmountOfOffices() > index) {
-                officeBuildingList.get(i).getList().delete(index);
+            if (officeBuildingList.get(i).getList().getAmountOfSpaces() > index) {
+                officeBuildingList.get(i).getList().deleteSpace(index);
                 break;
             } else {
-                index -= officeBuildingList.get(i).getList().getAmountOfOffices();
+                index -= officeBuildingList.get(i).getList().getAmountOfSpaces();
             }
         }
         return true;
     }
 
     //    Метод getBestSpace() получения самого большого по площади офиса здания.
+    @Override
     public Office getBestSpace() {
         Office office = new Office();
         for (int i = 0; i < officeBuildingList.size(); i++) {
@@ -136,13 +172,14 @@ public class OfficeBuilding {
     }
 
     //    Метод получения отсортированного по убыванию площадей массива офисов.
-    public Office[] getSortedByAreaOffices() {
+    @Override
+    public Office[] getSpaceArraySortedByArea() {
         int count = 0;
         Office[] offices = new Office[officeBuildingList.size()];
         boolean isSorted = false;
         for (int i = 0; i < officeBuildingList.size(); i++) {
-            for (int j = 0; i < officeBuildingList.get(i).getList().getAmountOfOffices(); j++) {
-                offices[count++] = officeBuildingList.get(i).getList().getOffice(j);
+            for (int j = 0; i < officeBuildingList.get(i).getList().getAmountOfSpaces(); j++) {
+                offices[count++] = officeBuildingList.get(i).getList().getSpace(j);
             }
         }
         while (!isSorted) {
