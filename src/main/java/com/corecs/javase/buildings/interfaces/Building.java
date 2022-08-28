@@ -1,9 +1,9 @@
 package com.corecs.javase.buildings.interfaces;
 
 public interface Building {
-    public int getFloorsAmount();
+    int getFloorsAmount();
 
-    public int getSpacesAmount();
+    int getSpacesAmount();
 
     public int getTotalSpacesArea();
 

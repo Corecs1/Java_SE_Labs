@@ -1,7 +1,7 @@
 package com.corecs.javase.buildings.interfaces;
 
 public interface Floor {
-    public int getAmountOfSpaces();
+    int getAmountOfSpaces();
 
     public int getTotalSpaceArea();
 

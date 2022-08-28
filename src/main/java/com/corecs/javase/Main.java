@@ -1,11 +1,9 @@
 package com.corecs.javase;
 
+import com.corecs.javase.buildings.Buildings;
 import com.corecs.javase.buildings.office.Office;
 import com.corecs.javase.buildings.office.OfficeBuilding;
 import com.corecs.javase.buildings.office.OfficeFloor;
-import com.corecs.javase.buildings.office.list.officeBuildingList.OfficeBuildingList;
-
-import java.util.Arrays;
 
 public class Main {
 
@@ -115,5 +113,7 @@ public class Main {
         officeBuilding.addSpace(6,new Office());
         System.out.println(officeBuilding.getSpace(3));
         System.out.println(officeBuilding.getFloorsAmount());
+
+        Buildings.outputBuilding(officeBuilding);
     }
 }

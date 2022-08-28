@@ -1,12 +1,16 @@
 package com.corecs.javase.buildings.office.list.officeBuildingList;
 
+import com.corecs.javase.buildings.office.Office;
 import com.corecs.javase.buildings.office.OfficeFloor;
 
-public class OfficeBuildingList {
+import java.util.*;
+import java.util.function.UnaryOperator;
+
+public class OfficeBuildingListOld implements List<Office> {
     private Node head;
     private int size;
 
-    public OfficeBuildingList() {
+    public OfficeBuildingListOld() {
         initHead();
     }
 
@@ -30,8 +34,93 @@ public class OfficeBuildingList {
         return resultNode;
     }
 
+    @Override
+    public Office set(int index, Office element) {
+        return null;
+    }
+
+    @Override
+    public void add(int index, Office element) {
+
+    }
+
     public int size() {
         return this.size;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return false;
+    }
+
+    @Override
+    public boolean contains(Object o) {
+        return false;
+    }
+
+    @Override
+    public Iterator<Office> iterator() {
+        return null;
+    }
+
+    @Override
+    public Object[] toArray() {
+        return new Object[0];
+    }
+
+    @Override
+    public <T> T[] toArray(T[] a) {
+        return null;
+    }
+
+    @Override
+    public boolean add(Office office) {
+        return false;
+    }
+
+    @Override
+    public boolean remove(Object o) {
+        return false;
+    }
+
+    @Override
+    public boolean containsAll(Collection<?> c) {
+        return false;
+    }
+
+    @Override
+    public boolean addAll(Collection<? extends Office> c) {
+        return false;
+    }
+
+    @Override
+    public boolean addAll(int index, Collection<? extends Office> c) {
+        return false;
+    }
+
+    @Override
+    public boolean removeAll(Collection<?> c) {
+        return false;
+    }
+
+    @Override
+    public boolean retainAll(Collection<?> c) {
+        return false;
+    }
+
+    @Override
+    public void replaceAll(UnaryOperator<Office> operator) {
+        List.super.replaceAll(operator);
+    }
+
+    @Override
+    public void sort(Comparator<? super Office> c) {
+        List.super.sort(c);
+    }
+
+    @Override
+    public void clear() {
+
     }
 
     public boolean addBuilding(OfficeFloor list) {
@@ -109,6 +198,36 @@ public class OfficeBuildingList {
         return element;
     }
 
+    @Override
+    public int indexOf(Object o) {
+        return 0;
+    }
+
+    @Override
+    public int lastIndexOf(Object o) {
+        return 0;
+    }
+
+    @Override
+    public ListIterator<Office> listIterator() {
+        return null;
+    }
+
+    @Override
+    public ListIterator<Office> listIterator(int index) {
+        return null;
+    }
+
+    @Override
+    public List<Office> subList(int fromIndex, int toIndex) {
+        return null;
+    }
+
+    @Override
+    public Spliterator<Office> spliterator() {
+        return List.super.spliterator();
+    }
+
     public boolean set(int index, OfficeFloor list) {
         Node update = get(index);
         update.setList(list);
@@ -120,6 +239,47 @@ public class OfficeBuildingList {
         for (int i = 0; i < size; i++) {
             ref.getList().print();
             ref = ref.getNext();
+        }
+    }
+
+    private class Node {
+        private Node next;
+        private Node prev;
+        private OfficeFloor list;
+
+        public Node(Node next, Node prev, OfficeFloor list) {
+            this.next = next;
+            this.prev = prev;
+            this.list = list;
+        }
+
+        public Node getNext() {
+            return next;
+        }
+
+        public void setNext(Node next) {
+            this.next = next;
+        }
+
+        public Node getPrev() {
+            return prev;
+        }
+
+        public void setPrev(Node prev) {
+            this.prev = prev;
+        }
+
+        public OfficeFloor getList() {
+            return list;
+        }
+
+        public void setList(OfficeFloor list) {
+            this.list = list;
+        }
+
+        @Override
+        public String toString() {
+            return "List{list=" + list + '}';
         }
     }
 }

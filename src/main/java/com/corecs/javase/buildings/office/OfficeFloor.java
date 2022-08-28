@@ -2,12 +2,12 @@ package com.corecs.javase.buildings.office;
 
 import com.corecs.javase.buildings.interfaces.Floor;
 import com.corecs.javase.buildings.interfaces.Space;
-import com.corecs.javase.buildings.office.list.officeFloorList.OfficeFloorList;
+import com.corecs.javase.buildings.office.list.officeFloorList.OfficeFloorListOld;
 import com.corecs.javase.exceptions.SpaceIndexOutOfBoundsException;
 
 public class OfficeFloor implements Floor {
     //Работа класса основана на односвязном циклическом списке офисов с выделенной головой
-    private OfficeFloorList list = new OfficeFloorList();
+    private OfficeFloorListOld list = new OfficeFloorListOld();
 
     //    Конструктор принимающий количество офисов на этаже.
     public OfficeFloor(int amountOfOffices) {
@@ -34,7 +34,7 @@ public class OfficeFloor implements Floor {
     public int getTotalSpaceArea() {
         int totalArea = 0;
         for (int i = 0; i < list.size(); i++) {
-            totalArea += list.get(i).getOffice().getArea();
+            totalArea += list.get(i).getArea();
         }
         return totalArea;
     }
@@ -43,7 +43,7 @@ public class OfficeFloor implements Floor {
     public int getTotalAmountOfRooms() {
         int totalAmountOfRooms = 0;
         for (int i = 0; i < list.size(); i++) {
-            totalAmountOfRooms += list.get(i).getOffice().getAmountOfRooms();
+            totalAmountOfRooms += list.get(i).getAmountOfRooms();
         }
         return totalAmountOfRooms;
     }
@@ -53,7 +53,7 @@ public class OfficeFloor implements Floor {
     public Office[] getArrayOfSpaces() {
         Office[] offices = new Office[list.size()];
         for (int i = 0; i < list.size(); i++) {
-            offices[i] = list.get(i).getOffice();
+            offices[i] = list.get(i);
         }
         return offices;
     }
@@ -64,7 +64,7 @@ public class OfficeFloor implements Floor {
         if (number >= list.size() || number < 0) {
             throw new SpaceIndexOutOfBoundsException();
         }
-        return list.get(number).getOffice();
+        return list.get(number);
     }
 
     //    Метод изменения офиса по его номеру на этаже и ссылке на обновленный офис.
@@ -99,10 +99,10 @@ public class OfficeFloor implements Floor {
 
     //    Метод getBestSpace() получения самого большого по площади офиса этажа.
     public Office getBestSpace() {
-        Office bestSpaceOffice = list.get(0).getOffice();
+        Office bestSpaceOffice = list.get(0);
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getOffice().getArea() > bestSpaceOffice.getArea()) {
-                bestSpaceOffice = list.get(i).getOffice();
+            if (list.get(i).getArea() > bestSpaceOffice.getArea()) {
+                bestSpaceOffice = list.get(i);
             }
         }
         return bestSpaceOffice;

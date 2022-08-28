@@ -3,13 +3,13 @@ package com.corecs.javase.buildings.office;
 import com.corecs.javase.buildings.interfaces.Building;
 import com.corecs.javase.buildings.interfaces.Floor;
 import com.corecs.javase.buildings.interfaces.Space;
-import com.corecs.javase.buildings.office.list.officeBuildingList.OfficeBuildingList;
+import com.corecs.javase.buildings.office.list.officeBuildingList.OfficeBuildingListOld;
 import com.corecs.javase.exceptions.FloorIndexOutOfBoundsException;
 import com.corecs.javase.exceptions.SpaceIndexOutOfBoundsException;
 
 public class OfficeBuilding implements Building {
     //    Работа класса основана на двусвязном циклическом списке этажей с выделенной головой.
-    private OfficeBuildingList officeBuildingList = new OfficeBuildingList();
+    private OfficeBuildingListOld officeBuildingList = new OfficeBuildingListOld();
 
     //    Конструктор, принимающий количество этажей и массив количества офисов по этажам.
     public OfficeBuilding(int amountOfFloors, int[] amountOfOfficesOnFloors) {
