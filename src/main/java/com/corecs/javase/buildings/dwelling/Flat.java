@@ -13,33 +13,37 @@ public class Flat implements Space {
         this(DEFAULT_AREA, DEFAULT_NUMBER_OF_ROOMS);
     }
 
+    // Конструктор принимающий площадь квартиры (создается квартира с 2 комнатами).
+    public Flat(int area) {
+        this(area, DEFAULT_NUMBER_OF_ROOMS);
+    }
+
     // Конструктор, принимающий 2 параметра (площадь и количество комнат)
     public Flat(int area, int amountOfRooms) {
         this.area = area;
         this.amountOfRooms = amountOfRooms;
     }
 
-    // Конструктор принимающий площадь квартиры (создается квартира с 2 комнатами).
-    public Flat(int area) {
-        this(area, DEFAULT_NUMBER_OF_ROOMS);
-    }
-
     // Метод получения площади квартиры
+    @Override
     public int getArea() {
         return area;
     }
 
     // Метод изменения площади квартиры.
+    @Override
     public void setArea(int area) {
         this.area = area;
     }
 
     // Метод получения количества комнат в квартире.
+    @Override
     public int getAmountOfRooms() {
         return amountOfRooms;
     }
 
     // Метод изменения количества комнат в квартире.
+    @Override
     public void setAmountOfRooms(int amountOfRooms) {
         this.amountOfRooms = amountOfRooms;
     }

@@ -19,6 +19,7 @@ public class DwellingFloor implements Floor {
 
     // Конструктор принимающий массив квартир этажа.
     public DwellingFloor(Flat[] arrayOfFlats) {
+        nullPointerCheck(arrayOfFlats);
         this.arrayOfFlats = arrayOfFlats;
         this.amountOfFlats = arrayOfFlats.length;
     }
@@ -58,18 +59,15 @@ public class DwellingFloor implements Floor {
     @Override
     // Метод получения квартиры по её номеру на этаже.
     public Flat getSpace(int flatNumber) {
-        if (flatNumber >= arrayOfFlats.length || flatNumber < 0) {
-            throw new SpaceIndexOutOfBoundsException();
-        }
+        indexGetAndSetAndDeleteOutCheck(flatNumber);
         return arrayOfFlats[flatNumber];
     }
 
     // Метод изменения квартиры по ее номеру на этаже и ссылке на новую квартиру.
     @Override
     public boolean setSpace(int flatNumber, Space flat) {
-        if (flatNumber >= arrayOfFlats.length || flatNumber < 0) {
-            throw new SpaceIndexOutOfBoundsException();
-        }
+        nullPointerCheck(flat);
+        indexGetAndSetAndDeleteOutCheck(flatNumber);
         arrayOfFlats[flatNumber] = (Flat) flat;
         return true;
     }
@@ -77,38 +75,33 @@ public class DwellingFloor implements Floor {
     //    Добавление квартиры по id и ссылке на объект квартиры
     @Override
     public boolean addSpace(int flatNumber, Space newFlat) {
-        if (flatNumber > arrayOfFlats.length || flatNumber < 0) {
-            throw new SpaceIndexOutOfBoundsException();
-        } else {
-            Flat[] newFlats = new Flat[arrayOfFlats.length + 1];
-            for (int i = 0, j = 0; i <= arrayOfFlats.length; i++) {
-                if (i != flatNumber) {
-                    newFlats[i] = arrayOfFlats[j++];
-                } else {
-                    newFlats[i] = (Flat) newFlat;
-                }
+        nullPointerCheck(newFlat);
+        indexAddOutCheck(flatNumber);
+        Flat[] newFlats = new Flat[arrayOfFlats.length + 1];
+        for (int i = 0, j = 0; i <= arrayOfFlats.length; i++) {
+            if (i != flatNumber) {
+                newFlats[i] = arrayOfFlats[j++];
+            } else {
+                newFlats[i] = (Flat) newFlat;
             }
-            amountOfFlats++;
-            arrayOfFlats = newFlats;
         }
+        amountOfFlats++;
+        arrayOfFlats = newFlats;
         return true;
     }
 
     // Метод удаления квартиры по ее номеру на этаже.
     @Override
     public boolean deleteSpace(int flatNumber) {
-        if (flatNumber >= arrayOfFlats.length || flatNumber < 0) {
-            throw new SpaceIndexOutOfBoundsException();
-        } else {
-            Flat[] newFlats = new Flat[arrayOfFlats.length - 1];
-            for (int i = 0, j = 0; i < arrayOfFlats.length; i++) {
-                if (i != flatNumber) {
-                    newFlats[j++] = arrayOfFlats[i];
-                }
+        indexGetAndSetAndDeleteOutCheck(flatNumber);
+        Flat[] newFlats = new Flat[arrayOfFlats.length - 1];
+        for (int i = 0, j = 0; i < arrayOfFlats.length; i++) {
+            if (i != flatNumber) {
+                newFlats[j++] = arrayOfFlats[i];
             }
-            amountOfFlats--;
-            arrayOfFlats = newFlats;
         }
+        amountOfFlats--;
+        arrayOfFlats = newFlats;
         return true;
     }
 
@@ -128,6 +121,24 @@ public class DwellingFloor implements Floor {
     public void showAllFlats() {
         for (Flat flat : arrayOfFlats) {
             System.out.println(flat);
+        }
+    }
+
+    private void indexGetAndSetAndDeleteOutCheck(int flatNumber) {
+        if (flatNumber >= arrayOfFlats.length || flatNumber < 0) {
+            throw new SpaceIndexOutOfBoundsException();
+        }
+    }
+
+    private void indexAddOutCheck(int flatNumber) {
+        if (flatNumber > arrayOfFlats.length || flatNumber < 0) {
+            throw new SpaceIndexOutOfBoundsException();
+        }
+    }
+
+    private void nullPointerCheck(Object o) {
+        if (o == null) {
+            throw new NullPointerException();
         }
     }
 }

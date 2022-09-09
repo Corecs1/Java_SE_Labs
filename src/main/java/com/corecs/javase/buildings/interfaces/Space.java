@@ -1,11 +1,11 @@
 package com.corecs.javase.buildings.interfaces;
 
 public interface Space {
-    public int getAmountOfRooms();
+    int getAmountOfRooms();
 
-    public void setAmountOfRooms(int amountOfRooms);
+    void setAmountOfRooms(int amountOfRooms);
 
-    public int getArea();
+    int getArea();
 
-    public void setArea(int area);
+    void setArea(int area);
 }

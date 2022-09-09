@@ -13,33 +13,37 @@ public class Office implements Space {
         this(DEFAULT_AREA, DEFAULT_NUMBER_OF_ROOMS);
     }
 
+    // Конструктор может принимать площадь офиса (создается офис с 1 комнатой).
+    public Office(int area) {
+        this(area, DEFAULT_NUMBER_OF_ROOMS);
+    }
+
     // Конструктор может принимать площадь офиса и количество комнат.
     public Office(int area, int amountOfRooms) {
         this.area = area;
         this.amountOfRooms = amountOfRooms;
     }
 
-    // Конструктор может принимать площадь офиса (создается офис с 1 комнатой).
-    public Office(int area) {
-        this(area, DEFAULT_NUMBER_OF_ROOMS);
-    }
-
     // Метод получения количества комнат в офисе.
+    @Override
     public int getAmountOfRooms() {
         return amountOfRooms;
     }
 
     // Метод изменения количества комнат в офисе.
+    @Override
     public void setAmountOfRooms(int amountOfRooms) {
         this.amountOfRooms = amountOfRooms;
     }
 
     // Метод получения площади офиса.
+    @Override
     public int getArea() {
         return area;
     }
 
     // Метод изменения площади офиса
+    @Override
     public void setArea(int area) {
         this.area = area;
     }

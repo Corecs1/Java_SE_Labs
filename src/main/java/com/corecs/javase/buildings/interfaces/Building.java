@@ -5,25 +5,25 @@ public interface Building {
 
     int getSpacesAmount();
 
-    public int getTotalSpacesArea();
+    int getTotalSpacesArea();
 
-    public int getTotalRoomsAmount();
+    int getTotalRoomsAmount();
 
-    public Floor[] getFloorsArray();
+    Floor[] getFloorsArray();
 
-    public Floor getFloor(int index);
+    Floor getFloor(int index);
 
-    public boolean setFloor(int index, Floor floor);
+    boolean setFloor(int index, Floor floor);
 
-    public Space getSpace(int index);
+    Space getSpace(int index);
 
-    public boolean setSpace(int index, Space space);
+    boolean setSpace(int index, Space space);
 
-    public boolean addSpace(int index, Space space);
+    boolean addSpace(int index, Space space);
 
-    public boolean removeSpace(int index);
+    boolean removeSpace(int index);
 
-    public Space getBestSpace();
+    Space getBestSpace();
 
-    public Space[] getSpaceArraySortedByArea();
+    Space[] getSpaceArraySortedByArea();
 }

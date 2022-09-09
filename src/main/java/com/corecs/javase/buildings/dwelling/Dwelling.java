@@ -21,6 +21,7 @@ public class Dwelling implements Building {
 
     // Конструктор принимающий массив этажей дома.
     public Dwelling(DwellingFloor[] dwellingFloors) {
+        nullPointerCheck(dwellingFloors);
         this.dwellingFloors = dwellingFloors;
         this.amountOfDwellingFloors = dwellingFloors.length;
     }
@@ -70,18 +71,15 @@ public class Dwelling implements Building {
     //    Метод получения объекта этажа, по его номеру в доме.
     @Override
     public DwellingFloor getFloor(int floorNumber) {
-        if (floorNumber >= dwellingFloors.length || floorNumber < 0) {
-            throw new FloorIndexOutOfBoundsException();
-        }
+        indexGetAndSetOutFloorCheck(floorNumber);
         return dwellingFloors[floorNumber];
     }
 
     //    Метод изменения этажа по его номеру в доме и ссылке на обновленный этаж.
     @Override
     public boolean setFloor(int floorNumber, Floor newDwellingFloor) {
-        if (floorNumber >= dwellingFloors.length || floorNumber < 0) {
-            throw new FloorIndexOutOfBoundsException();
-        }
+        nullPointerCheck(newDwellingFloor);
+        indexGetAndSetOutFloorCheck(floorNumber);
         dwellingFloors[floorNumber] = (DwellingFloor) newDwellingFloor;
         return true;
     }
@@ -89,9 +87,7 @@ public class Dwelling implements Building {
     //    Метод получения объекта квартиры по ее номеру в доме.
     @Override
     public Flat getSpace(int flatNumber) {
-        if (flatNumber >= getSpacesAmount() || flatNumber < 0) {
-            throw new SpaceIndexOutOfBoundsException();
-        }
+        indexGetAndSetAndDeleteOutSpaceCheck(flatNumber);
         Flat flat = null;
         for (DwellingFloor dwellingFloor : dwellingFloors) {
             if (dwellingFloor.getAmountOfSpaces() > flatNumber) {
@@ -107,9 +103,8 @@ public class Dwelling implements Building {
     //    Метод изменения объекта квартиры по ее номеру в доме и ссылке на объект квартиры.
     @Override
     public boolean setSpace(int flatNumber, Space flat) {
-        if (flatNumber >= getSpacesAmount() || flatNumber < 0) {
-            throw new SpaceIndexOutOfBoundsException();
-        }
+        nullPointerCheck(flat);
+        indexGetAndSetAndDeleteOutSpaceCheck(flatNumber);
         for (DwellingFloor dwellingFloor : dwellingFloors) {
             if (dwellingFloor.getAmountOfSpaces() > flatNumber) {
                 dwellingFloor.getArrayOfSpaces()[flatNumber] = (Flat) flat;
@@ -124,9 +119,8 @@ public class Dwelling implements Building {
     //    Метод добавления квартиры в дом по будущему номеру квартиры в доме и ссылке на объект квартиры.
     @Override
     public boolean addSpace(int flatNumber, Space flat) {
-        if (flatNumber > getSpacesAmount() || flatNumber < 0) {
-            throw new SpaceIndexOutOfBoundsException();
-        }
+        nullPointerCheck(flat);
+        indexAddOutCheck(flatNumber);
         for (DwellingFloor dwellingFloor : dwellingFloors) {
             if (dwellingFloor.getAmountOfSpaces() > flatNumber) {
                 dwellingFloor.addSpace(flatNumber, flat);
@@ -141,9 +135,7 @@ public class Dwelling implements Building {
     //    Метод удаления квартиры по ее номеру в доме.
     @Override
     public boolean removeSpace(int flatNumber) {
-        if (flatNumber >= getSpacesAmount() || flatNumber < 0) {
-            throw new SpaceIndexOutOfBoundsException();
-        }
+        indexGetAndSetAndDeleteOutSpaceCheck(flatNumber);
         for (DwellingFloor dwellingFloor : dwellingFloors) {
             if (dwellingFloor.getAmountOfSpaces() > flatNumber) {
                 dwellingFloor.deleteSpace(flatNumber);
@@ -189,6 +181,30 @@ public class Dwelling implements Building {
             }
         }
         return newArrayFlats;
+    }
+
+    private void indexGetAndSetOutFloorCheck(int floorNumber) {
+        if (floorNumber >= dwellingFloors.length || floorNumber < 0) {
+            throw new FloorIndexOutOfBoundsException();
+        }
+    }
+
+    private void indexGetAndSetAndDeleteOutSpaceCheck(int flatNumber) {
+        if (flatNumber >= getSpacesAmount() || flatNumber < 0) {
+            throw new SpaceIndexOutOfBoundsException();
+        }
+    }
+
+    private void indexAddOutCheck(int flatNumber) {
+        if (flatNumber > getSpacesAmount() || flatNumber < 0) {
+            throw new SpaceIndexOutOfBoundsException();
+        }
+    }
+
+    private void nullPointerCheck(Object o) {
+        if (o == null) {
+            throw new NullPointerException();
+        }
     }
 }
 

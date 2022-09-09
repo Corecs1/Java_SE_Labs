@@ -12,12 +12,12 @@ public class OfficeFloorList implements List<Office> {
     private int size;
 
     // Конструктор инициализирует выделенную голову
-    OfficeFloorList() {
+    protected OfficeFloorList() {
         initHead();
     }
 
     // Конструктор инициализирует переданный лист
-    OfficeFloorList(Collection<Office> list) {
+    protected OfficeFloorList(Collection<Office> list) {
         this();
         addAll(list);
     }
@@ -297,8 +297,14 @@ public class OfficeFloorList implements List<Office> {
     public void add(int index, Office office) {
         checkIndexForAdd(index);
         if (office != null) {
-            Node prev = getNodeByIndex(index - 1);
+            Node prev;
+            if (index == 0) {
+                prev = head;
+            } else {
+                prev = getNodeByIndex(index - 1);
+            }
             prev.next = new Node(prev.next, office);
+            this.size++;
         }
     }
 
@@ -333,8 +339,8 @@ public class OfficeFloorList implements List<Office> {
                 return firstIndex;
             }
         }
-        return-1;
-}
+        return -1;
+    }
 
     // Поиск позиции последнего вхождения офиса по объекту офиса в листе
     @Override
@@ -419,18 +425,18 @@ public class OfficeFloorList implements List<Office> {
         return List.super.spliterator();
     }
 
-private class Node {
-    private Node next;
-    private Office office;
+    private class Node {
+        private Node next;
+        private Office office;
 
-    Node(Node next, Office office) {
-        this.next = next;
-        this.office = office;
-    }
+        Node(Node next, Office office) {
+            this.next = next;
+            this.office = office;
+        }
 
-    @Override
-    public String toString() {
-        return "Node{" + office + '}';
+        @Override
+        public String toString() {
+            return "Node{" + office + '}';
+        }
     }
-}
 }
