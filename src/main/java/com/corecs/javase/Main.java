@@ -1,6 +1,7 @@
 package com.corecs.javase;
 
 import com.corecs.javase.buildings.office.Office;
+import com.corecs.javase.buildings.office.OfficeBuilding;
 import com.corecs.javase.buildings.office.OfficeFloor;
 
 import java.util.ArrayList;
@@ -19,17 +20,37 @@ public class Main {
         System.out.println(officeFloor.getAmountOfSpaces());
         System.out.println("----------------------------------------------");
 
-        List<Office> officeList = new ArrayList<>();
-        officeList.add(office1);
-        officeList.add(office2);
-        officeList.add(office3);
+        List<Office> officeList1 = new ArrayList<>();
+        officeList1.add(office1);
+        officeList1.add(office2);
+        officeList1.add(office3);
 
-        OfficeFloor officeFloor1 = new OfficeFloor(officeList);
+        List<Office> officeList2 = new ArrayList<>();
+        officeList2.add(new Office(500));
+        officeList2.add(new Office(450));
+        officeList2.add(new Office(600));
+        officeList2.add(new Office(1000));
+        officeList2.add(new Office(700));
+
+
+        OfficeFloor officeFloor1 = new OfficeFloor(officeList1);
         System.out.println(officeFloor1.getAmountOfSpaces());
         officeFloor1.remove(0);
         System.out.println(officeFloor1.getAmountOfSpaces());
         System.out.println(officeFloor1.getBestSpace());
         System.out.println(officeFloor1);
+        System.out.println("OfficeFloor #1 total space area: " + officeFloor1.getTotalSpaceArea());
 
+        OfficeFloor officeFloor2 = new OfficeFloor(officeList2);
+        System.out.println("OfficeFloor #2 total space area: " + officeFloor2.getTotalSpaceArea());
+
+        System.out.println("----------------------------------------------");
+
+        OfficeFloor[] officeFloors = {officeFloor1, officeFloor2};
+
+        OfficeBuilding officeBuilding = new OfficeBuilding(officeFloors);
+        System.out.println(officeBuilding.getFloorsAmount());
+        System.out.println(officeBuilding.get(0));
+        System.out.println(officeBuilding.getTotalSpacesArea());
     }
 }

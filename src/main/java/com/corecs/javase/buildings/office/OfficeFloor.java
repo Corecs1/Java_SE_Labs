@@ -44,8 +44,8 @@ public class OfficeFloor extends OfficeFloorList
     @Override
     public int getTotalSpaceArea() {
         int totalArea = 0;
-        for (Office office : this) {
-            totalArea += office.getArea();
+        for (int i = 0; i < size(); i++) {
+            totalArea += get(i).getArea();
         }
         return totalArea;
     }
