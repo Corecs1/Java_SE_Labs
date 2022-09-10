@@ -198,4 +198,13 @@ public class OfficeBuilding extends OfficeBuildingList
         }
         return offices;
     }
+
+    @Override
+    public String toString() {
+        String resultString = "";
+        for (int i = 0; i < size(); i++) {
+            resultString += "{" + get(i).toString() + "}, ";
+        }
+        return resultString;
+    }
 }
