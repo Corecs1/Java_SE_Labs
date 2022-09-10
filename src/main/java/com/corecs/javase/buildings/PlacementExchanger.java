@@ -12,6 +12,7 @@ public class PlacementExchanger {
 
     // Метод проверки возможности обмена помещениями.
     public static boolean spaceExchangePossible(Space space1, Space space2) {
+        nullPointerCheck(space1, space2);
         if (space1.getArea() == space2.getArea() &&
                 space1.getAmountOfRooms() == space2.getAmountOfRooms()) {
             return true;
@@ -20,6 +21,7 @@ public class PlacementExchanger {
 
     // Метод проверки возможности обмена этажами.
     public static boolean floorExchangePossible(Floor floor1, Floor floor2) {
+        nullPointerCheck(floor1, floor2);
         if (floor1.getTotalSpaceArea() == floor2.getTotalSpaceArea() &&
                 floor1.getTotalAmountOfRooms() == floor2.getTotalAmountOfRooms()) {
             return true;
@@ -28,6 +30,7 @@ public class PlacementExchanger {
 
     // Метод обмена помещениями двух этажей.
     public static void exchangeFloorRooms(Floor floor1, int index1, Floor floor2, int index2) throws InExchangeableSpacesException {
+        nullPointerCheck(floor1, floor2);
         if (!spaceExchangePossible(floor1.getSpace(index1), floor2.getSpace(index2))) {
             throw new InExchangeableSpacesException();
         } else if ((index1 >= floor1.getAmountOfSpaces() || index1 < 0) ||
@@ -42,6 +45,7 @@ public class PlacementExchanger {
 
     // Метод обмена этажами двух зданий.
     public static void exchangeBuildingFloors(Building building1, int index1, Building building2, int index2) throws InExchangeableFloorsException {
+        nullPointerCheck(building1, building2);
         if (!floorExchangePossible(building1.getFloor(index1), building2.getFloor(index2))) {
             throw new InExchangeableFloorsException();
         } else if ((index1 >= building1.getFloorsAmount() || index1 < 0) ||
@@ -51,6 +55,12 @@ public class PlacementExchanger {
             Floor refFloor = building1.getFloor(index1);
             building1.setFloor(index1, building2.getFloor(index2));
             building2.setFloor(index2, refFloor);
+        }
+    }
+
+    private static void nullPointerCheck(Object o1, Object o2) {
+        if (o1 == null || o2 == null) {
+            throw new NullPointerException();
         }
     }
 }
