@@ -71,6 +71,32 @@ public class Buildings {
         printWriter.close();
     }
 
+    //Чтение данных о здании из символьного потока
+    public static Building readBuilding(Reader in) {
+        Building building;
+        StreamTokenizer streamTokenizer = new StreamTokenizer(in);
+        try {
+            streamTokenizer.nextToken();
+            OfficeFloor[] floors = new OfficeFloor[(int) streamTokenizer.nval];
+            for (int i = 0; i < floors.length; i++) {
+                streamTokenizer.nextToken();
+                Office[] offices = new Office[(int) streamTokenizer.nval];
+                for (int j = 0; j < offices.length; j++) {
+                    streamTokenizer.nextToken();
+                    int rooms = (int) streamTokenizer.nval;
+                    streamTokenizer.nextToken();
+                    double area = streamTokenizer.nval;
+                    offices[j] = new Office(area, rooms);
+                }
+                floors[i] = new OfficeFloor(offices);
+            }
+            building = new OfficeBuilding(floors);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return building;
+    }
+    
     private static void nullPointerCheck(Object o) {
         if (o == null) {
             throw new NullPointerException("Object is null");
@@ -107,5 +133,7 @@ public class Buildings {
         System.out.println(officeBuilding1);
 
         writeBuilding(officeBuilding, new FileWriter("src\\main\\resources\\OutputWriter.txt"));
+
+        System.out.println(readBuilding(new FileReader("src\\main\\resources\\OutputWriter.txt")));
     }
 }
