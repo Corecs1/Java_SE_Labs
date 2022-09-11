@@ -26,8 +26,8 @@ public class DwellingFloor implements Floor {
 
     // Метод получения общей площади квартир этажа.
     @Override
-    public int getTotalSpaceArea() {
-        int count = 0;
+    public double getTotalSpaceArea() {
+        double count = 0;
         for (Flat flat : arrayOfFlats) {
             count += flat.getArea();
         }

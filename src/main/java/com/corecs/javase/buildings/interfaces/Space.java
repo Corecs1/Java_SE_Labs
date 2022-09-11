@@ -5,7 +5,7 @@ public interface Space {
 
     void setAmountOfRooms(int amountOfRooms);
 
-    int getArea();
+    double getArea();
 
-    void setArea(int area);
+    void setArea(double area);
 }

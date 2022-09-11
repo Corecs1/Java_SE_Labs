@@ -21,7 +21,7 @@ public class Buildings {
                 out.write(building.getFloor(i).getAmountOfSpaces());
                 for (int j = 0; j < building.getFloor(i).getAmountOfSpaces(); j++) {
                     out.write(building.getFloor(i).getSpace(j).getAmountOfRooms());
-                    out.write(building.getFloor(i).getSpace(j).getArea());
+                    out.write((int) building.getFloor(i).getSpace(j).getArea());
                 }
             }
             out.close();

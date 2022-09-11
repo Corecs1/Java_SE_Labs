@@ -3,7 +3,7 @@ package com.corecs.javase.buildings.dwelling;
 import com.corecs.javase.buildings.interfaces.Space;
 
 public class Flat implements Space {
-    private int area;
+    private double area;
     private int amountOfRooms;
     private static final int DEFAULT_AREA = 50;
     private static final int DEFAULT_NUMBER_OF_ROOMS = 2;
@@ -14,25 +14,25 @@ public class Flat implements Space {
     }
 
     // Конструктор принимающий площадь квартиры (создается квартира с 2 комнатами).
-    public Flat(int area) {
+    public Flat(double area) {
         this(area, DEFAULT_NUMBER_OF_ROOMS);
     }
 
     // Конструктор, принимающий 2 параметра (площадь и количество комнат)
-    public Flat(int area, int amountOfRooms) {
+    public Flat(double area, int amountOfRooms) {
         this.area = area;
         this.amountOfRooms = amountOfRooms;
     }
 
     // Метод получения площади квартиры
     @Override
-    public int getArea() {
+    public double getArea() {
         return area;
     }
 
     // Метод изменения площади квартиры.
     @Override
-    public void setArea(int area) {
+    public void setArea(double area) {
         this.area = area;
     }
 

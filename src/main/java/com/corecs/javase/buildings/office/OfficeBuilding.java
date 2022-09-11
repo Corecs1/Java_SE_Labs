@@ -46,8 +46,8 @@ public class OfficeBuilding extends OfficeBuildingList
 
     //    Метод получения общей площади помещений здания.
     @Override
-    public int getTotalSpacesArea() {
-        int count = 0;
+    public double getTotalSpacesArea() {
+        double count = 0;
         for (int i = 0; i < size(); i++) {
             count += get(i).getTotalSpaceArea();
         }

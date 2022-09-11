@@ -42,8 +42,8 @@ public class OfficeFloor extends OfficeFloorList
 
     // Метод получения общей площади помещений этажа.
     @Override
-    public int getTotalSpaceArea() {
-        int totalArea = 0;
+    public double getTotalSpaceArea() {
+        double totalArea = 0;
         for (int i = 0; i < size(); i++) {
             totalArea += get(i).getArea();
         }

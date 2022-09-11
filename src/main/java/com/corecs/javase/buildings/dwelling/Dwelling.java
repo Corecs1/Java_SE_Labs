@@ -44,8 +44,8 @@ public class Dwelling implements Building {
 
     // Метод получения общей площади квартир дома
     @Override
-    public int getTotalSpacesArea() {
-        int flatAreaCount = 0;
+    public double getTotalSpacesArea() {
+        double flatAreaCount = 0;
         for (DwellingFloor dwellingFloor : dwellingFloors) {
             flatAreaCount += dwellingFloor.getTotalSpaceArea();
         }

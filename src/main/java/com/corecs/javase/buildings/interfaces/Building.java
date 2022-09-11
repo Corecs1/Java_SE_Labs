@@ -5,7 +5,7 @@ public interface Building {
 
     int getSpacesAmount();
 
-    int getTotalSpacesArea();
+    double getTotalSpacesArea();
 
     int getTotalRoomsAmount();
 

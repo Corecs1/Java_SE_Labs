@@ -3,7 +3,7 @@ package com.corecs.javase.buildings.office;
 import com.corecs.javase.buildings.interfaces.Space;
 
 public class Office implements Space {
-    private int area;
+    private double area;
     private int amountOfRooms;
     private static final int DEFAULT_AREA = 250;
     private static final int DEFAULT_NUMBER_OF_ROOMS = 1;
@@ -14,12 +14,12 @@ public class Office implements Space {
     }
 
     // Конструктор может принимать площадь офиса (создается офис с 1 комнатой).
-    public Office(int area) {
+    public Office(double area) {
         this(area, DEFAULT_NUMBER_OF_ROOMS);
     }
 
     // Конструктор может принимать площадь офиса и количество комнат.
-    public Office(int area, int amountOfRooms) {
+    public Office(double area, int amountOfRooms) {
         this.area = area;
         this.amountOfRooms = amountOfRooms;
     }
@@ -38,13 +38,13 @@ public class Office implements Space {
 
     // Метод получения площади офиса.
     @Override
-    public int getArea() {
+    public double getArea() {
         return area;
     }
 
     // Метод изменения площади офиса
     @Override
-    public void setArea(int area) {
+    public void setArea(double area) {
         this.area = area;
     }
 
