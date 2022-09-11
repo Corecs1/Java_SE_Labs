@@ -6,6 +6,7 @@ import com.corecs.javase.buildings.interfaces.Space;
 import com.corecs.javase.exceptions.FloorIndexOutOfBoundsException;
 import com.corecs.javase.exceptions.SpaceIndexOutOfBoundsException;
 
+
 public class Dwelling implements Building {
     private DwellingFloor[] dwellingFloors;
     private int amountOfDwellingFloors;
