@@ -5,6 +5,7 @@ import com.corecs.javase.buildings.interfaces.Space;
 import com.corecs.javase.buildings.office.list.officeFloorList.OfficeFloorList;
 import com.corecs.javase.exceptions.SpaceIndexOutOfBoundsException;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -13,7 +14,7 @@ import java.util.Collection;
  */
 
 public class OfficeFloor extends OfficeFloorList
-        implements Floor {
+        implements Floor, Serializable {
 
     // Конструктор, принимающий количество офисов на этаже.
     public OfficeFloor(int amountOfOffices) {

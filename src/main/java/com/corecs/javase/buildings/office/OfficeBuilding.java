@@ -7,12 +7,14 @@ import com.corecs.javase.buildings.office.list.officeBuildingList.OfficeBuilding
 import com.corecs.javase.exceptions.FloorIndexOutOfBoundsException;
 import com.corecs.javase.exceptions.SpaceIndexOutOfBoundsException;
 
+import java.io.Serializable;
+
 /*
  *Работа класса основана на двусвязном циклическом списке этажей с выделенной головой.
  */
 
 public class OfficeBuilding extends OfficeBuildingList
-        implements Building {
+        implements Building, Serializable {
 
     //    Конструктор, принимающий количество этажей и массив количества офисов по этажам.
     public OfficeBuilding(int amountOfFloors, int[] amountOfOfficesOnFloors) {

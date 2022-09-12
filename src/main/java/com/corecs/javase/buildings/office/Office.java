@@ -2,7 +2,9 @@ package com.corecs.javase.buildings.office;
 
 import com.corecs.javase.buildings.interfaces.Space;
 
-public class Office implements Space {
+import java.io.Serializable;
+
+public class Office implements Space, Serializable {
     private double area;
     private int amountOfRooms;
     private static final int DEFAULT_AREA = 250;

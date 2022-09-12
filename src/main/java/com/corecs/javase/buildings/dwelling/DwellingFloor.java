@@ -4,7 +4,10 @@ import com.corecs.javase.buildings.interfaces.Floor;
 import com.corecs.javase.buildings.interfaces.Space;
 import com.corecs.javase.exceptions.SpaceIndexOutOfBoundsException;
 
-public class DwellingFloor implements Floor {
+import java.io.Serializable;
+import java.util.Arrays;
+
+public class DwellingFloor implements Floor, Serializable {
     private int amountOfFlats;
     private Flat[] arrayOfFlats;
 
@@ -140,5 +143,13 @@ public class DwellingFloor implements Floor {
         if (o == null) {
             throw new NullPointerException();
         }
+    }
+
+    @Override
+    public String toString() {
+        return "DwellingFloor{" +
+                "amountOfFlats=" + amountOfFlats +
+                ", arrayOfFlats=" + Arrays.toString(arrayOfFlats) +
+                '}';
     }
 }

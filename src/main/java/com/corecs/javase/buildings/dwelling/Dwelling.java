@@ -6,8 +6,11 @@ import com.corecs.javase.buildings.interfaces.Space;
 import com.corecs.javase.exceptions.FloorIndexOutOfBoundsException;
 import com.corecs.javase.exceptions.SpaceIndexOutOfBoundsException;
 
+import java.io.Serializable;
+import java.util.Arrays;
 
-public class Dwelling implements Building {
+
+public class Dwelling implements Building, Serializable {
     private DwellingFloor[] dwellingFloors;
     private int amountOfDwellingFloors;
 
@@ -206,6 +209,14 @@ public class Dwelling implements Building {
         if (o == null) {
             throw new NullPointerException();
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Dwelling{" +
+                "dwellingFloors=" + Arrays.toString(dwellingFloors) +
+                ", amountOfDwellingFloors=" + amountOfDwellingFloors +
+                '}';
     }
 }
 
