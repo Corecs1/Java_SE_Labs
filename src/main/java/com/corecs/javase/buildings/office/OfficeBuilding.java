@@ -13,35 +13,35 @@ import java.io.Serializable;
  *Работа класса основана на двусвязном циклическом списке этажей с выделенной головой.
  */
 
-public class OfficeBuilding extends OfficeBuildingList
-        implements Building, Serializable {
+public class OfficeBuilding implements Building, Serializable {
+    private OfficeBuildingList list = new OfficeBuildingList();
 
     //    Конструктор, принимающий количество этажей и массив количества офисов по этажам.
     public OfficeBuilding(int amountOfFloors, int[] amountOfOfficesOnFloors) {
         for (int i = 0; i < amountOfFloors; i++) {
-            add(new OfficeFloor(amountOfOfficesOnFloors[i]));
+            list.add(new OfficeFloor(amountOfOfficesOnFloors[i]));
         }
     }
 
     //    Конструктор принимающий массив этажей офисного здания.
     public OfficeBuilding(OfficeFloor[] officeFloors) {
         for (int i = 0; i < officeFloors.length; i++) {
-            add(officeFloors[i]);
+            list.add(officeFloors[i]);
         }
     }
 
     //    Метод получения общего количества этажей здания.
     @Override
     public int getFloorsAmount() {
-        return size();
+        return list.size();
     }
 
     //    Создайте метод получения общего количества офисов здания.
     @Override
     public int getSpacesAmount() {
         int count = 0;
-        for (int i = 0; i < size(); i++) {
-            count += get(i).getAmountOfSpaces();
+        for (int i = 0; i < list.size(); i++) {
+            count += list.get(i).getAmountOfSpaces();
         }
         return count;
     }
@@ -50,8 +50,8 @@ public class OfficeBuilding extends OfficeBuildingList
     @Override
     public double getTotalSpacesArea() {
         double count = 0;
-        for (int i = 0; i < size(); i++) {
-            count += get(i).getTotalSpaceArea();
+        for (int i = 0; i < list.size(); i++) {
+            count += list.get(i).getTotalSpaceArea();
         }
         return count;
     }
@@ -60,8 +60,8 @@ public class OfficeBuilding extends OfficeBuildingList
     @Override
     public int getTotalRoomsAmount() {
         int count = 0;
-        for (int i = 0; i < size(); i++) {
-            count += get(i).getTotalAmountOfRooms();
+        for (int i = 0; i < list.size(); i++) {
+            count += list.get(i).getTotalAmountOfRooms();
         }
         return count;
     }
@@ -69,9 +69,9 @@ public class OfficeBuilding extends OfficeBuildingList
     //    Метод получения массива этажей офисного здания.
     @Override
     public OfficeFloor[] getFloorsArray() {
-        OfficeFloor[] officeFloors = new OfficeFloor[size()];
-        for (int i = 0; i < size(); i++) {
-            officeFloors[i] = get(i);
+        OfficeFloor[] officeFloors = new OfficeFloor[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            officeFloors[i] = list.get(i);
         }
         return officeFloors;
     }
@@ -79,19 +79,19 @@ public class OfficeBuilding extends OfficeBuildingList
     //    Метод получения объекта этажа, по его номеру в здании.
     @Override
     public OfficeFloor getFloor(int index) {
-        if (index >= size() || index < 0) {
+        if (index >= list.size() || index < 0) {
             throw new FloorIndexOutOfBoundsException();
         }
-        return get(index);
+        return list.get(index);
     }
 
     //    Метод изменения этажа по его номеру в здании и ссылке на объект нового этажа.
     @Override
     public boolean setFloor(int index, Floor officeFloor) {
-        if (index >= size() || index < 0) {
+        if (index >= list.size() || index < 0) {
             throw new FloorIndexOutOfBoundsException();
         }
-        set(index, (OfficeFloor) officeFloor);
+        list.set(index, (OfficeFloor) officeFloor);
         return true;
     }
 
@@ -102,12 +102,12 @@ public class OfficeBuilding extends OfficeBuildingList
             throw new SpaceIndexOutOfBoundsException();
         }
         Office office = null;
-        for (int i = 0; i < size(); i++) {
-            if (get(i).getAmountOfSpaces() > index) {
-                office = get(i).getSpace(index);
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getAmountOfSpaces() > index) {
+                office = list.get(i).getSpace(index);
                 break;
             } else {
-                index -= get(i).getAmountOfSpaces();
+                index -= list.get(i).getAmountOfSpaces();
             }
         }
         return office;
@@ -119,12 +119,12 @@ public class OfficeBuilding extends OfficeBuildingList
         if (index >= getSpacesAmount() || index < 0) {
             throw new SpaceIndexOutOfBoundsException();
         }
-        for (int i = 0; i < size(); i++) {
-            if (get(i).getAmountOfSpaces() > index) {
-                get(i).setSpace(index, office);
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getAmountOfSpaces() > index) {
+                list.get(i).setSpace(index, office);
                 break;
             } else {
-                index -= get(i).getAmountOfSpaces();
+                index -= list.get(i).getAmountOfSpaces();
             }
         }
         return true;
@@ -136,12 +136,12 @@ public class OfficeBuilding extends OfficeBuildingList
         if (index > getSpacesAmount() || index < 0) {
             throw new SpaceIndexOutOfBoundsException();
         }
-        for (int i = 0; i < size(); i++) {
-            if (get(i).getAmountOfSpaces() >= index) {
-                get(i).addSpace(index, office);
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getAmountOfSpaces() >= index) {
+                list.get(i).addSpace(index, office);
                 break;
             } else {
-                index -= get(i).getAmountOfSpaces();
+                index -= list.get(i).getAmountOfSpaces();
             }
         }
         return true;
@@ -153,12 +153,12 @@ public class OfficeBuilding extends OfficeBuildingList
         if (index >= getSpacesAmount() || index < 0) {
             throw new SpaceIndexOutOfBoundsException();
         }
-        for (int i = 0; i < size(); i++) {
-            if (get(i).getAmountOfSpaces() > index) {
-                get(i).deleteSpace(index);
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getAmountOfSpaces() > index) {
+                list.get(i).deleteSpace(index);
                 break;
             } else {
-                index -= get(i).getAmountOfSpaces();
+                index -= list.get(i).getAmountOfSpaces();
             }
         }
         return true;
@@ -168,9 +168,9 @@ public class OfficeBuilding extends OfficeBuildingList
     @Override
     public Office getBestSpace() {
         Office office = new Office();
-        for (int i = 0; i < size(); i++) {
-            if (get(i).getBestSpace().getArea() > office.getArea()) {
-                office = get(i).getBestSpace();
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getBestSpace().getArea() > office.getArea()) {
+                office = list.get(i).getBestSpace();
             }
         }
         return office;
@@ -180,11 +180,11 @@ public class OfficeBuilding extends OfficeBuildingList
     @Override
     public Office[] getSpaceArraySortedByArea() {
         int count = 0;
-        Office[] offices = new Office[size()];
+        Office[] offices = new Office[list.size()];
         boolean isSorted = false;
-        for (int i = 0; i < size(); i++) {
-            for (int j = 0; i < get(i).getAmountOfSpaces(); j++) {
-                offices[count++] = get(i).getSpace(j);
+        for (int i = 0; i < list.size(); i++) {
+            for (int j = 0; i < list.get(i).getAmountOfSpaces(); j++) {
+                offices[count++] = list.get(i).getSpace(j);
             }
         }
         while (!isSorted) {
@@ -204,8 +204,8 @@ public class OfficeBuilding extends OfficeBuildingList
     @Override
     public String toString() {
         String resultString = "";
-        for (int i = 0; i < size(); i++) {
-            resultString += "{" + get(i).toString() + "}, ";
+        for (int i = 0; i < list.size(); i++) {
+            resultString += "{" + list.get(i).toString() + "}, ";
         }
         return resultString;
     }

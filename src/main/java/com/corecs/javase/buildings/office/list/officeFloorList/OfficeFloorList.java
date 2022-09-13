@@ -3,16 +3,17 @@ package com.corecs.javase.buildings.office.list.officeFloorList;
 import com.corecs.javase.buildings.office.Office;
 import com.corecs.javase.exceptions.SpaceIndexOutOfBoundsException;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.*;
 import java.util.function.UnaryOperator;
 
-public class OfficeFloorList implements List<Office> {
+public class OfficeFloorList implements List<Office>, Serializable {
     private Node head;
     private int size;
 
     // Конструктор инициализирует выделенную голову
-    protected OfficeFloorList() {
+    public OfficeFloorList() {
         initHead();
     }
 
@@ -425,7 +426,7 @@ public class OfficeFloorList implements List<Office> {
         return List.super.spliterator();
     }
 
-    private class Node {
+    private class Node implements Serializable {
         private Node next;
         private Office office;
 

@@ -35,7 +35,7 @@ public class Main {
 
         OfficeFloor officeFloor1 = new OfficeFloor(officeList1);
         System.out.println(officeFloor1.getAmountOfSpaces());
-        officeFloor1.remove(0);
+        officeFloor1.deleteSpace(0);
         System.out.println(officeFloor1.getAmountOfSpaces());
         System.out.println(officeFloor1.getBestSpace());
         System.out.println(officeFloor1);
@@ -50,7 +50,7 @@ public class Main {
 
         OfficeBuilding officeBuilding = new OfficeBuilding(officeFloors);
         System.out.println(officeBuilding.getFloorsAmount());
-        System.out.println(officeBuilding.get(0));
+        System.out.println(officeBuilding.getFloor(0));
         System.out.println(officeBuilding.getTotalSpacesArea());
     }
 }

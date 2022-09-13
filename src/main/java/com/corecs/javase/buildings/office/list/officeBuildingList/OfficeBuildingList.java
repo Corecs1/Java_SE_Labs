@@ -3,18 +3,19 @@ package com.corecs.javase.buildings.office.list.officeBuildingList;
 import com.corecs.javase.buildings.office.OfficeFloor;
 import com.corecs.javase.exceptions.SpaceIndexOutOfBoundsException;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-public class OfficeBuildingList implements List<OfficeFloor> {
+public class OfficeBuildingList implements List<OfficeFloor>, Serializable {
     private Node head;
 
     private int size;
 
-    protected OfficeBuildingList() {
+    public OfficeBuildingList() {
         initHead();
     }
 
@@ -308,7 +309,7 @@ public class OfficeBuildingList implements List<OfficeFloor> {
         return ref;
     }
 
-    private class Node {
+    private class Node implements Serializable {
         private Node next;
         private Node prev;
         private OfficeFloor officeFloor;

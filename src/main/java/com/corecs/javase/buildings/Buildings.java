@@ -1,8 +1,5 @@
 package com.corecs.javase.buildings;
 
-import com.corecs.javase.buildings.dwelling.Dwelling;
-import com.corecs.javase.buildings.dwelling.DwellingFloor;
-import com.corecs.javase.buildings.dwelling.Flat;
 import com.corecs.javase.buildings.interfaces.Building;
 import com.corecs.javase.buildings.office.Office;
 import com.corecs.javase.buildings.office.OfficeBuilding;
@@ -162,33 +159,39 @@ public class Buildings implements Serializable {
 
         System.out.println(readBuilding(new FileReader("src\\main\\resources\\OutputWriter.txt")));
 
+        System.out.println("Start serialize");
+        serializableBuilding(officeBuilding1, new FileOutputStream("src\\main\\resources\\OutputSerializable.bin"));
+
+        System.out.println("Start deserialize");
+        System.out.println(deserializableBuilding(new FileInputStream("src\\main\\resources\\OutputSerializable.bin")));
+
         /*-----------------------------------------------------------------------------------------------------------------------*/
 
-        Flat flat1 = new Flat(300, 2);
-        Flat flat2 = new Flat(350, 3);
-        Flat flat3 = new Flat(70, 6);
-        Flat[] flats1 = {flat1, flat2, flat3};
-        Flat flat4 = new Flat(200, 3);
-        Flat flat5 = new Flat(40, 3);
-        Flat flat6 = new Flat(55, 6);
-        Flat[] flats2 = {flat4, flat5, flat6};
-        Flat flat7 = new Flat(60, 1);
-        Flat flat8 = new Flat(30, 2);
-        Flat flat9 = new Flat(70, 2);
-        Flat[] flats3 = {flat7, flat8, flat9};
-
-        DwellingFloor dwellingFloor1 = new DwellingFloor(flats1);
-        DwellingFloor dwellingFloor2 = new DwellingFloor(flats2);
-        DwellingFloor dwellingFloor3 = new DwellingFloor(flats3);
-        DwellingFloor[] dwellingFloors = {dwellingFloor1, dwellingFloor2, dwellingFloor3};
-
-        Dwelling dwelling = new Dwelling(dwellingFloors);
-        System.out.println("Dwell is created... " + dwelling);
-
-        serializableBuilding(dwelling, new FileOutputStream("src\\main\\resources\\OutputSerializable.bin"));
-
-        Dwelling dwelling1 = (Dwelling) deserializableBuilding(new FileInputStream("src\\main\\resources\\OutputSerializable.bin"));
-
-        System.out.println(dwelling1);
+//        Flat flat1 = new Flat(300, 2);
+//        Flat flat2 = new Flat(350, 3);
+//        Flat flat3 = new Flat(70, 6);
+//        Flat[] flats1 = {flat1, flat2, flat3};
+//        Flat flat4 = new Flat(200, 3);
+//        Flat flat5 = new Flat(40, 3);
+//        Flat flat6 = new Flat(55, 6);
+//        Flat[] flats2 = {flat4, flat5, flat6};
+//        Flat flat7 = new Flat(60, 1);
+//        Flat flat8 = new Flat(30, 2);
+//        Flat flat9 = new Flat(70, 2);
+//        Flat[] flats3 = {flat7, flat8, flat9};
+//
+//        DwellingFloor dwellingFloor1 = new DwellingFloor(flats1);
+//        DwellingFloor dwellingFloor2 = new DwellingFloor(flats2);
+//        DwellingFloor dwellingFloor3 = new DwellingFloor(flats3);
+//        DwellingFloor[] dwellingFloors = {dwellingFloor1, dwellingFloor2, dwellingFloor3};
+//
+//        Dwelling dwelling = new Dwelling(dwellingFloors);
+//        System.out.println("Dwell is created... " + dwelling);
+//
+//        serializableBuilding(dwelling, new FileOutputStream("src\\main\\resources\\OutputSerializable.bin"));
+//
+//        Dwelling dwelling1 = (Dwelling) deserializableBuilding(new FileInputStream("src\\main\\resources\\OutputSerializable.bin"));
+//
+//        System.out.println(dwelling1);
     }
 }
