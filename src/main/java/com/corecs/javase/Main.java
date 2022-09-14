@@ -1,8 +1,10 @@
 package com.corecs.javase;
 
+import com.corecs.javase.buildings.interfaces.Space;
 import com.corecs.javase.buildings.office.Office;
 import com.corecs.javase.buildings.office.OfficeBuilding;
 import com.corecs.javase.buildings.office.OfficeFloor;
+import com.corecs.javase.buildings.office.list.officeFloorList.OfficeFloorList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,32 +27,21 @@ public class Main {
         officeList1.add(office2);
         officeList1.add(office3);
 
-        List<Office> officeList2 = new ArrayList<>();
+        List<Space> officeList2 = new ArrayList<>();
         officeList2.add(new Office(500));
         officeList2.add(new Office(450));
         officeList2.add(new Office(600));
         officeList2.add(new Office(1000));
         officeList2.add(new Office(700));
 
+        List<Space> list = new OfficeFloorList(officeList2);
+        for (Space space : list) {
+            System.out.println(space);
+        }
 
-        OfficeFloor officeFloor1 = new OfficeFloor(officeList1);
-        System.out.println(officeFloor1.getAmountOfSpaces());
-        officeFloor1.deleteSpace(0);
-        System.out.println(officeFloor1.getAmountOfSpaces());
+        OfficeFloor officeFloor1 = new OfficeFloor(officeList2);
+        System.out.println(officeFloor1.getTotalSpaceArea());
+        System.out.println(officeFloor1.getTotalAmountOfRooms());
         System.out.println(officeFloor1.getBestSpace());
-        System.out.println(officeFloor1);
-        System.out.println("OfficeFloor #1 total space area: " + officeFloor1.getTotalSpaceArea());
-
-        OfficeFloor officeFloor2 = new OfficeFloor(officeList2);
-        System.out.println("OfficeFloor #2 total space area: " + officeFloor2.getTotalSpaceArea());
-
-        System.out.println("----------------------------------------------");
-
-        OfficeFloor[] officeFloors = {officeFloor1, officeFloor2};
-
-        OfficeBuilding officeBuilding = new OfficeBuilding(officeFloors);
-        System.out.println(officeBuilding.getFloorsAmount());
-        System.out.println(officeBuilding.getFloor(0));
-        System.out.println(officeBuilding.getTotalSpacesArea());
     }
 }

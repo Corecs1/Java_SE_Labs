@@ -1,5 +1,6 @@
 package com.corecs.javase.buildings.office.list.officeBuildingList;
 
+import com.corecs.javase.buildings.interfaces.Floor;
 import com.corecs.javase.buildings.office.OfficeFloor;
 import com.corecs.javase.exceptions.SpaceIndexOutOfBoundsException;
 
@@ -10,7 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-public class OfficeBuildingList implements List<OfficeFloor>, Serializable {
+public class OfficeBuildingList implements List<Floor>, Serializable {
     private Node head;
 
     private int size;
@@ -41,13 +42,13 @@ public class OfficeBuildingList implements List<OfficeFloor>, Serializable {
     }
 
     @Override
-    public Iterator<OfficeFloor> iterator() {
+    public Iterator<Floor> iterator() {
         return null;
     }
 
     @Override
     public Object[] toArray() {
-        OfficeFloor[] officeFloors = new OfficeFloor[size];
+        Floor[] officeFloors = new Floor[size];
         int count = 0;
         for (Node ref = this.head.next; ref != this.head; ref = ref.next) {
             officeFloors[count++] = ref.officeFloor;
@@ -68,7 +69,7 @@ public class OfficeBuildingList implements List<OfficeFloor>, Serializable {
     }
 
     @Override
-    public boolean add(OfficeFloor officeFloor) {
+    public boolean add(Floor officeFloor) {
         addLast(officeFloor);
         return true;
     }
@@ -93,9 +94,9 @@ public class OfficeBuildingList implements List<OfficeFloor>, Serializable {
     }
 
     @Override
-    public boolean addAll(Collection<? extends OfficeFloor> officeFloors) {
+    public boolean addAll(Collection<? extends Floor> officeFloors) {
         if (officeFloors != null && !officeFloors.isEmpty()) {
-            for (OfficeFloor officeFloor : officeFloors) {
+            for (Floor officeFloor : officeFloors) {
                 add(officeFloor);
             }
             return true;
@@ -104,7 +105,7 @@ public class OfficeBuildingList implements List<OfficeFloor>, Serializable {
     }
 
     @Override
-    public boolean addAll(int index, Collection<? extends OfficeFloor> officeFloors) {
+    public boolean addAll(int index, Collection<? extends Floor> officeFloors) {
         checkIndexForAdd(index);
         if (officeFloors != null && !officeFloors.isEmpty()) {
             indexOf(index);
@@ -128,9 +129,9 @@ public class OfficeBuildingList implements List<OfficeFloor>, Serializable {
     public boolean retainAll(Collection<?> officeFloors) {
         boolean modified = false;
         if (officeFloors != null && !officeFloors.isEmpty()) {
-            Iterator<OfficeFloor> iterator = iterator();
+            Iterator<Floor> iterator = iterator();
             while (iterator.hasNext()) {
-                OfficeFloor offices = iterator.next();
+                Floor offices = iterator.next();
                 if (!officeFloors.contains(offices)) {
                     modified = true;
                     remove(offices);
@@ -147,15 +148,15 @@ public class OfficeBuildingList implements List<OfficeFloor>, Serializable {
     }
 
     @Override
-    public OfficeFloor get(int index) {
+    public Floor get(int index) {
         checkIndex(index);
         return getNodeByIndex(index).officeFloor;
     }
 
     @Override
-    public OfficeFloor set(int index, OfficeFloor element) {
+    public Floor set(int index, Floor element) {
         checkIndex(index);
-        OfficeFloor refOfficeFloor = null;
+        Floor refOfficeFloor = null;
         if (element != null) {
             Node setNode = getNodeByIndex(index);
             refOfficeFloor = setNode.officeFloor;
@@ -165,7 +166,7 @@ public class OfficeBuildingList implements List<OfficeFloor>, Serializable {
     }
 
     @Override
-    public void add(int index, OfficeFloor element) {
+    public void add(int index, Floor element) {
         checkIndexForAdd(index);
         if (element != null) {
             if (index == 0) {
@@ -183,10 +184,10 @@ public class OfficeBuildingList implements List<OfficeFloor>, Serializable {
     }
 
     @Override
-    public OfficeFloor remove(int index) {
+    public Floor remove(int index) {
         checkIndex(index);
         Node deleteNode = getNodeByIndex(index);
-        OfficeFloor deleteOfficeFloor = null;
+        Floor deleteOfficeFloor = null;
         if (index == 0) {
             removeFirst();
         } else if (index == (size - 1)) {
@@ -231,17 +232,17 @@ public class OfficeBuildingList implements List<OfficeFloor>, Serializable {
     }
 
     @Override
-    public ListIterator<OfficeFloor> listIterator() {
+    public ListIterator<Floor> listIterator() {
         return null;
     }
 
     @Override
-    public ListIterator<OfficeFloor> listIterator(int index) {
+    public ListIterator<Floor> listIterator(int index) {
         return null;
     }
 
     @Override
-    public List<OfficeFloor> subList(int fromIndex, int toIndex) {
+    public List<Floor> subList(int fromIndex, int toIndex) {
         return null;
     }
 
@@ -259,7 +260,7 @@ public class OfficeBuildingList implements List<OfficeFloor>, Serializable {
         }
     }
 
-    private void addFirst(OfficeFloor list) {
+    private void addFirst(Floor list) {
         if (list != null) {
             Node first = new Node(this.head.getNext(), this.head, list);
             this.head.getNext().setPrev(first);
@@ -268,7 +269,7 @@ public class OfficeBuildingList implements List<OfficeFloor>, Serializable {
         }
     }
 
-    private void addLast(OfficeFloor officeFloor) {
+    private void addLast(Floor officeFloor) {
         if (officeFloor != null) {
             Node last = new Node(this.head, this.head.getPrev(), officeFloor);
             this.head.getPrev().setNext(last);
@@ -277,8 +278,8 @@ public class OfficeBuildingList implements List<OfficeFloor>, Serializable {
         }
     }
 
-    private OfficeFloor removeFirst() {
-        OfficeFloor oldElement = this.head.getNext().getList();
+    private Floor removeFirst() {
+        Floor oldElement = this.head.getNext().getList();
         Node delete = this.head.getNext();
         this.head.setNext(delete.getNext());
         delete.getNext().setPrev(this.head);
@@ -286,8 +287,8 @@ public class OfficeBuildingList implements List<OfficeFloor>, Serializable {
         return oldElement;
     }
 
-    private OfficeFloor removeLast() {
-        OfficeFloor oldElement = this.head.getPrev().getList();
+    private Floor removeLast() {
+        Floor oldElement = this.head.getPrev().getList();
         Node delete = this.head.getPrev();
         this.head.setPrev(delete.getPrev());
         delete.getPrev().setNext(this.head);
@@ -312,9 +313,9 @@ public class OfficeBuildingList implements List<OfficeFloor>, Serializable {
     private class Node implements Serializable {
         private Node next;
         private Node prev;
-        private OfficeFloor officeFloor;
+        private Floor officeFloor;
 
-        Node(Node next, Node prev, OfficeFloor officeFloor) {
+        Node(Node next, Node prev, Floor officeFloor) {
             this.next = next;
             this.prev = prev;
             this.officeFloor = officeFloor;
@@ -336,11 +337,11 @@ public class OfficeBuildingList implements List<OfficeFloor>, Serializable {
             this.prev = prev;
         }
 
-        OfficeFloor getList() {
+        Floor getList() {
             return officeFloor;
         }
 
-        void setList(OfficeFloor list) {
+        void setList(Floor list) {
             this.officeFloor = list;
         }
 

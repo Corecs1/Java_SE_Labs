@@ -24,7 +24,7 @@ public class OfficeBuilding implements Building, Serializable {
     }
 
     //    Конструктор принимающий массив этажей офисного здания.
-    public OfficeBuilding(OfficeFloor[] officeFloors) {
+    public OfficeBuilding(Floor[] officeFloors) {
         for (int i = 0; i < officeFloors.length; i++) {
             list.add(officeFloors[i]);
         }
@@ -40,8 +40,8 @@ public class OfficeBuilding implements Building, Serializable {
     @Override
     public int getSpacesAmount() {
         int count = 0;
-        for (int i = 0; i < list.size(); i++) {
-            count += list.get(i).getAmountOfSpaces();
+        for (Floor floor : list) {
+            count += floor.getAmountOfSpaces();
         }
         return count;
     }
@@ -68,8 +68,8 @@ public class OfficeBuilding implements Building, Serializable {
 
     //    Метод получения массива этажей офисного здания.
     @Override
-    public OfficeFloor[] getFloorsArray() {
-        OfficeFloor[] officeFloors = new OfficeFloor[list.size()];
+    public Floor[] getFloorsArray() {
+        Floor[] officeFloors = new Floor[list.size()];
         for (int i = 0; i < list.size(); i++) {
             officeFloors[i] = list.get(i);
         }
@@ -78,7 +78,7 @@ public class OfficeBuilding implements Building, Serializable {
 
     //    Метод получения объекта этажа, по его номеру в здании.
     @Override
-    public OfficeFloor getFloor(int index) {
+    public Floor getFloor(int index) {
         if (index >= list.size() || index < 0) {
             throw new FloorIndexOutOfBoundsException();
         }
@@ -91,17 +91,17 @@ public class OfficeBuilding implements Building, Serializable {
         if (index >= list.size() || index < 0) {
             throw new FloorIndexOutOfBoundsException();
         }
-        list.set(index, (OfficeFloor) officeFloor);
+        list.set(index, officeFloor);
         return true;
     }
 
     //    Метод получения объекта офиса по его номеру в офисном здании.
     @Override
-    public Office getSpace(int index) {
+    public Space getSpace(int index) {
         if (index >= getSpacesAmount() || index < 0) {
             throw new SpaceIndexOutOfBoundsException();
         }
-        Office office = null;
+        Space office = null;
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getAmountOfSpaces() > index) {
                 office = list.get(i).getSpace(index);
@@ -166,8 +166,8 @@ public class OfficeBuilding implements Building, Serializable {
 
     //    Метод getBestSpace() получения самого большого по площади офиса здания.
     @Override
-    public Office getBestSpace() {
-        Office office = new Office();
+    public Space getBestSpace() {
+        Space office = new Office();
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getBestSpace().getArea() > office.getArea()) {
                 office = list.get(i).getBestSpace();
@@ -178,9 +178,9 @@ public class OfficeBuilding implements Building, Serializable {
 
     //    Метод получения отсортированного по убыванию площадей массива офисов.
     @Override
-    public Office[] getSpaceArraySortedByArea() {
+    public Space[] getSpaceArraySortedByArea() {
         int count = 0;
-        Office[] offices = new Office[list.size()];
+        Space[] offices = new Space[list.size()];
         boolean isSorted = false;
         for (int i = 0; i < list.size(); i++) {
             for (int j = 0; i < list.get(i).getAmountOfSpaces(); j++) {
@@ -192,7 +192,7 @@ public class OfficeBuilding implements Building, Serializable {
             for (int i = 0; i < offices.length - 1; i++) {
                 if (offices[i].getArea() < offices[i + 1].getArea()) {
                     isSorted = false;
-                    Office ref = offices[i];
+                    Space ref = offices[i];
                     offices[i] = offices[i + 1];
                     offices[i + 1] = ref;
                 }

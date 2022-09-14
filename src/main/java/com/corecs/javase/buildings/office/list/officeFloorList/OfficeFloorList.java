@@ -1,6 +1,6 @@
 package com.corecs.javase.buildings.office.list.officeFloorList;
 
-import com.corecs.javase.buildings.office.Office;
+import com.corecs.javase.buildings.interfaces.Space;
 import com.corecs.javase.exceptions.SpaceIndexOutOfBoundsException;
 
 import java.io.Serializable;
@@ -8,7 +8,7 @@ import java.lang.reflect.Array;
 import java.util.*;
 import java.util.function.UnaryOperator;
 
-public class OfficeFloorList implements List<Office>, Serializable {
+public class OfficeFloorList implements List<Space>, Serializable {
     private Node head;
     private int size;
 
@@ -18,7 +18,7 @@ public class OfficeFloorList implements List<Office>, Serializable {
     }
 
     // Конструктор инициализирует переданный лист
-    protected OfficeFloorList(Collection<Office> list) {
+    public OfficeFloorList(Collection<Space> list) {
         this();
         addAll(list);
     }
@@ -67,7 +67,7 @@ public class OfficeFloorList implements List<Office>, Serializable {
     }
 
     // Добавление первого элемента
-    private void addFirst(Office office) {
+    private void addFirst(Space office) {
         if (office != null) {
             this.head.next = new Node(this.head.next, office);
             this.size++;
@@ -75,7 +75,7 @@ public class OfficeFloorList implements List<Office>, Serializable {
     }
 
     // Добавление последнего элемента
-    private void addLast(Office office) {
+    private void addLast(Space office) {
         if (office != null) {
             getLastNode().next = new Node(this.head, office);
             this.size++;
@@ -83,22 +83,22 @@ public class OfficeFloorList implements List<Office>, Serializable {
     }
 
     // Метод удаления первого элемента
-    private Office removeFirst() {
+    private Space removeFirst() {
         if (isEmpty()) {
             throw new NoSuchElementException("Element not found...");
         }
-        Office deleteOffice = this.head.next.office;
+        Space deleteOffice = this.head.next.office;
         this.head.next = this.head.next.next;
         this.size--;
         return deleteOffice;
     }
 
     // Метод удаления последнего элемента
-    private Office removeLast() {
+    private Space removeLast() {
         if (isEmpty()) {
             throw new NoSuchElementException("Element not found...");
         }
-        Office deleteOffice = getLastNode().office;
+        Space deleteOffice = getLastNode().office;
         Node prevNode = getNodeByIndex(size - 2);
         prevNode.next = prevNode.next.next;
         this.size--;
@@ -125,18 +125,20 @@ public class OfficeFloorList implements List<Office>, Serializable {
 
     // Итератор над листом оффисов
     @Override
-    public Iterator<Office> iterator() {
-        Iterator<Office> iter = new Iterator<Office>() {
-            Node ref = head.next;
+    public Iterator<Space> iterator() {
+        Iterator<Space> iter = new Iterator<Space>() {
+            Node ref = head;
 
             @Override
             public boolean hasNext() {
-                return ref.next.office != null;
+                if (ref == null) return false;
+                if (ref.next == null) return false;
+                return !ref.next.equals(head);
             }
 
             @Override
-            public Office next() {
-                Node current = ref;
+            public Space next() {
+                Node current = ref.next;
                 ref = ref.next;
                 return current.office;
             }
@@ -147,7 +149,7 @@ public class OfficeFloorList implements List<Office>, Serializable {
     // Получение масива оффисов
     @Override
     public Object[] toArray() {
-        Office[] offices = new Office[this.size];
+        Space[] offices = new Space[this.size];
         int count = 0;
         for (Node ref = this.head.next; ref != this.head; ref = ref.next) {
             offices[count++] = ref.office;
@@ -170,7 +172,7 @@ public class OfficeFloorList implements List<Office>, Serializable {
 
     // Метод добавления оффиса
     @Override
-    public boolean add(Office office) {
+    public boolean add(Space office) {
         addLast(office);
         return true;
     }
@@ -198,9 +200,9 @@ public class OfficeFloorList implements List<Office>, Serializable {
 
     // Добавление листа оффисов
     @Override
-    public boolean addAll(Collection<? extends Office> officeList) {
+    public boolean addAll(Collection<? extends Space> officeList) {
         if (officeList != null && !officeList.isEmpty()) {
-            for (Office office : officeList) {
+            for (Space office : officeList) {
                 add(office);
             }
         }
@@ -209,7 +211,7 @@ public class OfficeFloorList implements List<Office>, Serializable {
 
     // Вставляет все элементы указанной коллекции в этот список, начиная с указанной позиции
     @Override
-    public boolean addAll(int index, Collection<? extends Office> officeList) {
+    public boolean addAll(int index, Collection<? extends Space> officeList) {
         checkIndexForAdd(index);
         Node node = getNodeByIndex(index);
         Node nexNode = node.next;
@@ -218,7 +220,7 @@ public class OfficeFloorList implements List<Office>, Serializable {
             addAll(officeList);
             modified = true;
         } else {
-            for (Office office : officeList) {
+            for (Space office : officeList) {
 //                add(index++, office);
                 modified = true;
             }
@@ -245,9 +247,9 @@ public class OfficeFloorList implements List<Office>, Serializable {
     public boolean retainAll(Collection<?> offices) {
         Objects.requireNonNull(offices);
         boolean modified = false;
-        Iterator<Office> iterator = iterator();
+        Iterator<Space> iterator = iterator();
         while (iterator.hasNext()) {
-            Office office = iterator.next();
+            Space office = iterator.next();
             if (!offices.contains(office)) {
                 modified = true;
                 remove(office);
@@ -257,12 +259,12 @@ public class OfficeFloorList implements List<Office>, Serializable {
     }
 
     @Override
-    public void replaceAll(UnaryOperator<Office> operator) {
+    public void replaceAll(UnaryOperator<Space> operator) {
         List.super.replaceAll(operator);
     }
 
     @Override
-    public void sort(Comparator<? super Office> c) {
+    public void sort(Comparator<? super Space> c) {
         List.super.sort(c);
     }
 
@@ -275,16 +277,16 @@ public class OfficeFloorList implements List<Office>, Serializable {
 
     // Метод получения оффиса по индексу
     @Override
-    public Office get(int index) {
+    public Space get(int index) {
         checkIndex(index);
         return getNodeByIndex(index).office;
     }
 
     // Замена офиса по индексу
     @Override
-    public Office set(int index, Office office) {
+    public Space set(int index, Space office) {
         checkIndex(index);
-        Office refOffice = null;
+        Space refOffice = null;
         if (office != null) {
             Node setNode = getNodeByIndex(index);
             refOffice = setNode.office;
@@ -295,7 +297,7 @@ public class OfficeFloorList implements List<Office>, Serializable {
 
     // Добавление оффиса по индексу
     @Override
-    public void add(int index, Office office) {
+    public void add(int index, Space office) {
         checkIndexForAdd(index);
         if (office != null) {
             Node prev;
@@ -311,9 +313,9 @@ public class OfficeFloorList implements List<Office>, Serializable {
 
     // Удаление элемента по индексу
     @Override
-    public Office remove(int index) {
+    public Space remove(int index) {
         checkIndex(index);
-        Office deleteOffice = null;
+        Space deleteOffice = null;
         if (index == 0) {
             deleteOffice = removeFirst();
         } else if (index == (size - 1)) {
@@ -360,8 +362,8 @@ public class OfficeFloorList implements List<Office>, Serializable {
     }
 
     @Override
-    public ListIterator<Office> listIterator() {
-        ListIterator<Office> listIterator = new ListIterator<Office>() {
+    public ListIterator<Space> listIterator() {
+        ListIterator<Space> listIterator = new ListIterator<Space>() {
 
             @Override
             public boolean hasNext() {
@@ -369,7 +371,7 @@ public class OfficeFloorList implements List<Office>, Serializable {
             }
 
             @Override
-            public Office next() {
+            public Space next() {
                 return null;
             }
 
@@ -379,7 +381,7 @@ public class OfficeFloorList implements List<Office>, Serializable {
             }
 
             @Override
-            public Office previous() {
+            public Space previous() {
                 return null;
             }
 
@@ -399,12 +401,12 @@ public class OfficeFloorList implements List<Office>, Serializable {
             }
 
             @Override
-            public void set(Office office) {
+            public void set(Space office) {
 
             }
 
             @Override
-            public void add(Office office) {
+            public void add(Space office) {
 
             }
         };
@@ -412,25 +414,25 @@ public class OfficeFloorList implements List<Office>, Serializable {
     }
 
     @Override
-    public ListIterator<Office> listIterator(int index) {
+    public ListIterator<Space> listIterator(int index) {
         return null;
     }
 
     @Override
-    public List<Office> subList(int fromIndex, int toIndex) {
+    public List<Space> subList(int fromIndex, int toIndex) {
         return null;
     }
 
     @Override
-    public Spliterator<Office> spliterator() {
+    public Spliterator<Space> spliterator() {
         return List.super.spliterator();
     }
 
     private class Node implements Serializable {
         private Node next;
-        private Office office;
+        private Space office;
 
-        Node(Node next, Office office) {
+        Node(Node next, Space office) {
             this.next = next;
             this.office = office;
         }

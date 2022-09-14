@@ -24,14 +24,14 @@ public class OfficeFloor implements Floor, Serializable {
     }
 
     // Конструктор, принимающий массив офисов этажа.
-    public OfficeFloor(Office[] offices) {
+    public OfficeFloor(Space[] offices) {
         for (int i = 0; i < offices.length; i++) {
             list.add(i, offices[i]);
         }
     }
 
     // Конструктор, принимающий коллекцию офисов.
-    public OfficeFloor(Collection<Office> offices) {
+    public OfficeFloor(Collection<Space> offices) {
         list.addAll(offices);
     }
 
@@ -45,8 +45,8 @@ public class OfficeFloor implements Floor, Serializable {
     @Override
     public double getTotalSpaceArea() {
         double totalArea = 0;
-        for (int i = 0; i < list.size(); i++) {
-            totalArea += list.get(i).getArea();
+        for (Space space : list) {
+            totalArea += space.getArea();
         }
         return totalArea;
     }
@@ -54,16 +54,16 @@ public class OfficeFloor implements Floor, Serializable {
     // Метод получения общего количества комнат этажа.
     public int getTotalAmountOfRooms() {
         int totalAmountOfRooms = 0;
-        for (int i = 0; i < list.size(); i++) {
-            totalAmountOfRooms += list.get(i).getAmountOfRooms();
+        for (Space space : list) {
+            totalAmountOfRooms += space.getAmountOfRooms();
         }
         return totalAmountOfRooms;
     }
 
     // Метод получения массива офисов этажа.
     @Override
-    public Office[] getArrayOfSpaces() {
-        Office[] offices = new Office[list.size()];
+    public Space[] getArrayOfSpaces() {
+        Space[] offices = new Space[list.size()];
         for (int i = 0; i < list.size(); i++) {
             offices[i] = list.get(i);
         }
@@ -72,7 +72,7 @@ public class OfficeFloor implements Floor, Serializable {
 
     // Метод получения офиса по его номеру на этаже.
     @Override
-    public Office getSpace(int number) {
+    public Space getSpace(int number) {
         if (number >= list.size() || number < 0) {
             throw new SpaceIndexOutOfBoundsException();
         }
@@ -85,7 +85,7 @@ public class OfficeFloor implements Floor, Serializable {
         if (number >= list.size() || number < 0) {
             throw new SpaceIndexOutOfBoundsException();
         }
-        list.set(number, (Office) office);
+        list.set(number, office);
         return true;
     }
 
@@ -95,7 +95,7 @@ public class OfficeFloor implements Floor, Serializable {
         if (number > list.size() || number < 0) {
             throw new SpaceIndexOutOfBoundsException();
         }
-        list.add(number, (Office) office);
+        list.add(number, office);
         return true;
     }
 
@@ -110,11 +110,11 @@ public class OfficeFloor implements Floor, Serializable {
     }
 
     // Метод getBestSpace() получения самого большого по площади офиса этажа.
-    public Office getBestSpace() {
-        Office bestSpaceOffice = list.get(0);
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getArea() > bestSpaceOffice.getArea()) {
-                bestSpaceOffice = list.get(i);
+    public Space getBestSpace() {
+        Space bestSpaceOffice = list.get(0);
+        for (Space space : list) {
+            if (space.getArea() > bestSpaceOffice.getArea()) {
+                bestSpaceOffice = space;
             }
         }
         return bestSpaceOffice;
@@ -122,7 +122,7 @@ public class OfficeFloor implements Floor, Serializable {
 
     @Override
     public String toString() {
-        Office[] offices = (Office[]) list.toArray();
+        Space[] offices = (Space[]) list.toArray();
         return Arrays.toString(offices);
     }
 }

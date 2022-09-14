@@ -1,6 +1,11 @@
 package com.corecs.javase.buildings;
 
+import com.corecs.javase.buildings.factory.DwellingFactory;
+import com.corecs.javase.buildings.factory.OfficeFactory;
 import com.corecs.javase.buildings.interfaces.Building;
+import com.corecs.javase.buildings.interfaces.BuildingFactory;
+import com.corecs.javase.buildings.interfaces.Floor;
+import com.corecs.javase.buildings.interfaces.Space;
 import com.corecs.javase.buildings.office.Office;
 import com.corecs.javase.buildings.office.OfficeBuilding;
 import com.corecs.javase.buildings.office.OfficeFloor;
@@ -9,6 +14,11 @@ import java.io.*;
 
 public class Buildings implements Serializable {
     private static final long serialVersionUID = 1L;
+    private static BuildingFactory buildingFactory = new DwellingFactory();
+
+    public static void setBuildingFactory(BuildingFactory buildingFactory) {
+        Buildings.buildingFactory = buildingFactory;
+    }
 
     //Записи данных о здании в байтовый поток
     public static void outputBuilding(Building building, OutputStream out) {
@@ -38,17 +48,17 @@ public class Buildings implements Serializable {
         Building building;
         try {
             inputStream = new DataInputStream(in);
-            OfficeFloor[] floors = new OfficeFloor[inputStream.readInt()];
+            Floor[] floors = new Floor[inputStream.readInt()];
             for (int i = 0; i < floors.length; i++) {
-                Office[] spaces = new Office[inputStream.readInt()];
+                Space[] spaces = new Space[inputStream.readInt()];
                 for (int j = 0; j < spaces.length; j++) {
                     int rooms = inputStream.readInt();
                     double area = inputStream.readDouble();
-                    spaces[j] = new Office(area, rooms);
+                    spaces[j] = buildingFactory.createSpace(area, rooms);
                 }
-                floors[i] = new OfficeFloor(spaces);
+                floors[i] = buildingFactory.createFloor(spaces);
             }
-            building = new OfficeBuilding(floors);
+            building = buildingFactory.createBuilding(floors);
             inputStream.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -78,26 +88,27 @@ public class Buildings implements Serializable {
         StreamTokenizer streamTokenizer = new StreamTokenizer(in);
         try {
             streamTokenizer.nextToken();
-            OfficeFloor[] floors = new OfficeFloor[(int) streamTokenizer.nval];
+            Floor[] floors = new Floor[(int) streamTokenizer.nval];
             for (int i = 0; i < floors.length; i++) {
                 streamTokenizer.nextToken();
-                Office[] offices = new Office[(int) streamTokenizer.nval];
-                for (int j = 0; j < offices.length; j++) {
+                Space[] spaces = new Space[(int) streamTokenizer.nval];
+                for (int j = 0; j < spaces.length; j++) {
                     streamTokenizer.nextToken();
                     int rooms = (int) streamTokenizer.nval;
                     streamTokenizer.nextToken();
                     double area = streamTokenizer.nval;
-                    offices[j] = new Office(area, rooms);
+                    spaces[j] = buildingFactory.createSpace(area, rooms);
                 }
-                floors[i] = new OfficeFloor(offices);
+                floors[i] = buildingFactory.createFloor(spaces);
             }
-            building = new OfficeBuilding(floors);
+            building = buildingFactory.createBuilding(floors);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         return building;
     }
 
+    // Сериализация здания в байтовый поток
     public static void serializableBuilding(Building building, OutputStream out) {
         try {
             ObjectOutputStream outputStream = new ObjectOutputStream(out);
@@ -108,6 +119,7 @@ public class Buildings implements Serializable {
         }
     }
 
+    // Десериализация здания из байтового потока
     public static Building deserializableBuilding(InputStream in) {
         Building building;
         try {
@@ -118,6 +130,13 @@ public class Buildings implements Serializable {
             throw new RuntimeException(e);
         }
         return building;
+    }
+
+    // Метод текстовой записи
+    public static void writeBuildingFormat(Building building, Writer out) {
+        PrintWriter writer = new PrintWriter(out);
+        writer.println(building);
+        writer.close();
     }
 
     private static void nullPointerCheck(Object o) {
@@ -147,29 +166,37 @@ public class Buildings implements Serializable {
         OfficeFloor officeFloor3 = new OfficeFloor(offices3);
         OfficeFloor[] officeFloors = {officeFloor1, officeFloor2, officeFloor3};
 
+//        Space[] spaces = {office1, office2};
+//        Office[] offices = (Office[]) spaces;
+
         OfficeBuilding officeBuilding = new OfficeBuilding(officeFloors);
         System.out.println(officeBuilding);
+
+        Buildings.setBuildingFactory(new OfficeFactory());
 
         outputBuilding(officeBuilding, new FileOutputStream("src\\main\\resources\\OutputStream.txt"));
 
         OfficeBuilding officeBuilding1 = (OfficeBuilding) inputBuilding(new FileInputStream("src\\main\\resources\\OutputStream.txt"));
         System.out.println(officeBuilding1);
 
-        writeBuilding(officeBuilding, new FileWriter("src\\main\\resources\\OutputWriter.txt"));
+//        Space[] spaces = {office1, office2, office3};
+//        BuildingFactory buildingFactory1 = new OfficeFactory();
+//        buildingFactory1.createFloor(spaces);
 
-        System.out.println(readBuilding(new FileReader("src\\main\\resources\\OutputWriter.txt")));
-
+//        writeBuilding(officeBuilding, new FileWriter("src\\main\\resources\\OutputWriter.txt"));
+//
+//        System.out.println(readBuilding(new FileReader("src\\main\\resources\\OutputWriter.txt")));
+//
         System.out.println("Start serialize");
         serializableBuilding(officeBuilding1, new FileOutputStream("src\\main\\resources\\OutputSerializable.bin"));
 
         System.out.println("Start deserialize");
         System.out.println(deserializableBuilding(new FileInputStream("src\\main\\resources\\OutputSerializable.bin")));
 
+
+
         /*-----------------------------------------------------------------------------------------------------------------------*/
 
-//        Flat flat1 = new Flat(300, 2);
-//        Flat flat2 = new Flat(350, 3);
-//        Flat flat3 = new Flat(70, 6);
 //        Flat[] flats1 = {flat1, flat2, flat3};
 //        Flat flat4 = new Flat(200, 3);
 //        Flat flat5 = new Flat(40, 3);
