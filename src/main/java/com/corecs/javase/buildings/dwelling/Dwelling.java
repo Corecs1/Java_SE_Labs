@@ -8,6 +8,7 @@ import com.corecs.javase.exceptions.SpaceIndexOutOfBoundsException;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Objects;
 
 
 public class Dwelling implements Building, Serializable {
@@ -209,6 +210,21 @@ public class Dwelling implements Building, Serializable {
         if (o == null) {
             throw new NullPointerException();
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Dwelling dwelling = (Dwelling) o;
+        return amountOfDwellingFloors == dwelling.amountOfDwellingFloors && Arrays.equals(dwellingFloors, dwelling.dwellingFloors);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(amountOfDwellingFloors);
+        result = 31 * result + Arrays.hashCode(dwellingFloors);
+        return result;
     }
 
     @Override

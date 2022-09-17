@@ -6,8 +6,8 @@ import com.corecs.javase.buildings.office.list.officeFloorList.OfficeFloorList;
 import com.corecs.javase.exceptions.SpaceIndexOutOfBoundsException;
 
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Objects;
 
 /*
  * Работа класса основана на односвязном циклическом списке офисов с выделенной головой
@@ -118,6 +118,19 @@ public class OfficeFloor implements Floor, Serializable {
             }
         }
         return bestSpaceOffice;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OfficeFloor that = (OfficeFloor) o;
+        return list.equals(that.list);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(list);
     }
 
     @Override

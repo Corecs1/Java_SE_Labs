@@ -3,6 +3,7 @@ package com.corecs.javase.buildings.office;
 import com.corecs.javase.buildings.interfaces.Space;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Office implements Space, Serializable {
     private double area;
@@ -48,6 +49,19 @@ public class Office implements Space, Serializable {
     @Override
     public void setArea(double area) {
         this.area = area;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Office office = (Office) o;
+        return Double.compare(office.area, area) == 0 && amountOfRooms == office.amountOfRooms;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(area, amountOfRooms);
     }
 
     @Override

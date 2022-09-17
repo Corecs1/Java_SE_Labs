@@ -3,6 +3,7 @@ package com.corecs.javase.buildings.dwelling;
 import com.corecs.javase.buildings.interfaces.Space;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Flat implements Space, Serializable {
     private double area;
@@ -48,6 +49,19 @@ public class Flat implements Space, Serializable {
     @Override
     public void setAmountOfRooms(int amountOfRooms) {
         this.amountOfRooms = amountOfRooms;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Flat flat = (Flat) o;
+        return Double.compare(flat.area, area) == 0 && amountOfRooms == flat.amountOfRooms;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(area, amountOfRooms);
     }
 
     @Override

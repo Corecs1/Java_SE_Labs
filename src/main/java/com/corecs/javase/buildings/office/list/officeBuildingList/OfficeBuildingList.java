@@ -5,10 +5,7 @@ import com.corecs.javase.exceptions.SpaceIndexOutOfBoundsException;
 
 import java.io.Serializable;
 import java.lang.reflect.Array;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
 
 public class OfficeBuildingList implements List<Floor>, Serializable {
     private Node head;
@@ -17,6 +14,19 @@ public class OfficeBuildingList implements List<Floor>, Serializable {
 
     public OfficeBuildingList() {
         initHead();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OfficeBuildingList floors = (OfficeBuildingList) o;
+        return size == floors.size && head.equals(floors.head);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(head, size);
     }
 
     public OfficeBuildingList(Collection<Floor> list) {

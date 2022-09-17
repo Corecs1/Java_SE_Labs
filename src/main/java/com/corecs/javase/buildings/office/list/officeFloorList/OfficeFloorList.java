@@ -428,6 +428,19 @@ public class OfficeFloorList implements List<Space>, Serializable {
         return List.super.spliterator();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OfficeFloorList spaces = (OfficeFloorList) o;
+        return size == spaces.size && head.equals(spaces.head);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(head, size);
+    }
+
     private class Node implements Serializable {
         private Node next;
         private Space office;

@@ -9,6 +9,7 @@ import com.corecs.javase.exceptions.SpaceIndexOutOfBoundsException;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Objects;
 
 /*
  *Работа класса основана на двусвязном циклическом списке этажей с выделенной головой.
@@ -205,6 +206,19 @@ public class OfficeBuilding implements Building, Serializable {
             }
         }
         return offices;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OfficeBuilding that = (OfficeBuilding) o;
+        return list.equals(that.list);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(list);
     }
 
     @Override

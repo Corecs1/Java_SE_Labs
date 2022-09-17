@@ -6,6 +6,7 @@ import com.corecs.javase.exceptions.SpaceIndexOutOfBoundsException;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Objects;
 
 public class DwellingFloor implements Floor, Serializable {
     private int amountOfFlats;
@@ -154,5 +155,20 @@ public class DwellingFloor implements Floor, Serializable {
         }
         str.append(")");
         return str.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DwellingFloor that = (DwellingFloor) o;
+        return amountOfFlats == that.amountOfFlats && Arrays.equals(arrayOfFlats, that.arrayOfFlats);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(amountOfFlats);
+        result = 31 * result + Arrays.hashCode(arrayOfFlats);
+        return result;
     }
 }
