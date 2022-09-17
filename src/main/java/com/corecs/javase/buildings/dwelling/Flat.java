@@ -2,7 +2,9 @@ package com.corecs.javase.buildings.dwelling;
 
 import com.corecs.javase.buildings.interfaces.Space;
 
-public class Flat implements Space {
+import java.io.Serializable;
+
+public class Flat implements Space, Serializable {
     private double area;
     private int amountOfRooms;
     private static final int DEFAULT_AREA = 50;

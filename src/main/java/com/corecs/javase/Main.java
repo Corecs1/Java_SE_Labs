@@ -1,56 +1,60 @@
 package com.corecs.javase;
 
+import com.corecs.javase.buildings.Buildings;
+import com.corecs.javase.buildings.factory.OfficeFactory;
+import com.corecs.javase.buildings.interfaces.BuildingFactory;
+import com.corecs.javase.buildings.interfaces.Space;
 import com.corecs.javase.buildings.office.Office;
 import com.corecs.javase.buildings.office.OfficeBuilding;
 import com.corecs.javase.buildings.office.OfficeFloor;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.*;
 
 public class Main {
-    public static void main(String[] args) {
-        Office office1 = new Office();
-        Office office2 = new Office(100);
-        Office office3 = new Office(400, 5);
-        Office[] offices = {office3, office2, office1};
+    public static void main(String[] args) throws IOException {
 
-        OfficeFloor officeFloor = new OfficeFloor(offices);
-        System.out.println(officeFloor.getAmountOfSpaces());
-        officeFloor.deleteSpace(0);
-        System.out.println(officeFloor.getAmountOfSpaces());
-        System.out.println("----------------------------------------------");
+        Office office1 = new Office(300, 2);
+        Office office2 = new Office(350, 3);
+        Office office3 = new Office(70, 6);
+        Office[] offices1 = {office1, office2, office3};
 
-        List<Office> officeList1 = new ArrayList<>();
-        officeList1.add(office1);
-        officeList1.add(office2);
-        officeList1.add(office3);
+        Office office4 = new Office(200, 3);
+        Office office5 = new Office(40, 3);
+        Office office6 = new Office(55, 6);
+        Office[] offices2 = {office4, office5, office6};
 
-        List<Office> officeList2 = new ArrayList<>();
-        officeList2.add(new Office(500));
-        officeList2.add(new Office(450));
-        officeList2.add(new Office(600));
-        officeList2.add(new Office(1000));
-        officeList2.add(new Office(700));
+        Office office7 = new Office(60, 1);
+        Office office8 = new Office(30, 2);
+        Office office9 = new Office(70, 2);
+        Office[] offices3 = {office7, office8, office9};
 
-
-        OfficeFloor officeFloor1 = new OfficeFloor(officeList1);
-        System.out.println(officeFloor1.getAmountOfSpaces());
-        officeFloor1.remove(0);
-        System.out.println(officeFloor1.getAmountOfSpaces());
-        System.out.println(officeFloor1.getBestSpace());
-        System.out.println(officeFloor1);
-        System.out.println("OfficeFloor #1 total space area: " + officeFloor1.getTotalSpaceArea());
-
-        OfficeFloor officeFloor2 = new OfficeFloor(officeList2);
-        System.out.println("OfficeFloor #2 total space area: " + officeFloor2.getTotalSpaceArea());
-
-        System.out.println("----------------------------------------------");
-
-        OfficeFloor[] officeFloors = {officeFloor1, officeFloor2};
+        OfficeFloor officeFloor1 = new OfficeFloor(offices1);
+        OfficeFloor officeFloor2 = new OfficeFloor(offices2);
+        OfficeFloor officeFloor3 = new OfficeFloor(offices3);
+        OfficeFloor[] officeFloors = {officeFloor1, officeFloor2, officeFloor3};
 
         OfficeBuilding officeBuilding = new OfficeBuilding(officeFloors);
-        System.out.println(officeBuilding.getFloorsAmount());
-        System.out.println(officeBuilding.get(0));
-        System.out.println(officeBuilding.getTotalSpacesArea());
+        System.out.println(officeBuilding);
+
+        Buildings.setBuildingFactory(new OfficeFactory());
+
+        Buildings.outputBuilding(officeBuilding, new FileOutputStream("src\\main\\resources\\OutputStream.txt"));
+
+        OfficeBuilding officeBuilding1 = (OfficeBuilding) Buildings.inputBuilding(new FileInputStream("src\\main\\resources\\OutputStream.txt"));
+        System.out.println(officeBuilding1);
+
+        Space[] spaces = {office1, office2, office3};
+        BuildingFactory buildingFactory1 = new OfficeFactory();
+        buildingFactory1.createFloor(spaces);
+
+        Buildings.writeBuilding(officeBuilding, new FileWriter("src\\main\\resources\\OutputWriter.txt"));
+
+        System.out.println(Buildings.readBuilding(new FileReader("src\\main\\resources\\OutputWriter.txt")));
+
+        System.out.println("Start serialize");
+        Buildings.serializableBuilding(officeBuilding1, new FileOutputStream("src\\main\\resources\\OutputSerializable.bin"));
+
+        System.out.println("Start deserialize");
+        System.out.println(Buildings.deserializableBuilding(new FileInputStream("src\\main\\resources\\OutputSerializable.bin")));
     }
 }

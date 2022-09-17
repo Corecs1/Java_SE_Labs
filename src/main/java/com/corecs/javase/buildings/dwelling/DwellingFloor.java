@@ -4,13 +4,16 @@ import com.corecs.javase.buildings.interfaces.Floor;
 import com.corecs.javase.buildings.interfaces.Space;
 import com.corecs.javase.exceptions.SpaceIndexOutOfBoundsException;
 
-public class DwellingFloor implements Floor {
+import java.io.Serializable;
+import java.util.Arrays;
+
+public class DwellingFloor implements Floor, Serializable {
     private int amountOfFlats;
-    private Flat[] arrayOfFlats;
+    private Space[] arrayOfFlats;
 
     // Конструктор, принимающий количество квартир на этаже.
     public DwellingFloor(int amountOfFlats) {
-        this.arrayOfFlats = new Flat[amountOfFlats];
+        this.arrayOfFlats = new Space[amountOfFlats];
         for (int i = 0; i < arrayOfFlats.length; i++) {
             arrayOfFlats[i] = new Flat();
         }
@@ -18,7 +21,7 @@ public class DwellingFloor implements Floor {
     }
 
     // Конструктор принимающий массив квартир этажа.
-    public DwellingFloor(Flat[] arrayOfFlats) {
+    public DwellingFloor(Space[] arrayOfFlats) {
         nullPointerCheck(arrayOfFlats);
         this.arrayOfFlats = arrayOfFlats;
         this.amountOfFlats = arrayOfFlats.length;
@@ -28,7 +31,7 @@ public class DwellingFloor implements Floor {
     @Override
     public double getTotalSpaceArea() {
         double count = 0;
-        for (Flat flat : arrayOfFlats) {
+        for (Space flat : arrayOfFlats) {
             count += flat.getArea();
         }
         return count;
@@ -38,7 +41,7 @@ public class DwellingFloor implements Floor {
     @Override
     public int getTotalAmountOfRooms() {
         int count = 0;
-        for (Flat flat : arrayOfFlats) {
+        for (Space flat : arrayOfFlats) {
             count += flat.getAmountOfRooms();
         }
         return count;
@@ -52,13 +55,13 @@ public class DwellingFloor implements Floor {
 
     // Метод получения массива квартир этажа.
     @Override
-    public Flat[] getArrayOfSpaces() {
+    public Space[] getArrayOfSpaces() {
         return arrayOfFlats;
     }
 
     @Override
     // Метод получения квартиры по её номеру на этаже.
-    public Flat getSpace(int flatNumber) {
+    public Space getSpace(int flatNumber) {
         indexGetAndSetAndDeleteOutCheck(flatNumber);
         return arrayOfFlats[flatNumber];
     }
@@ -68,7 +71,7 @@ public class DwellingFloor implements Floor {
     public boolean setSpace(int flatNumber, Space flat) {
         nullPointerCheck(flat);
         indexGetAndSetAndDeleteOutCheck(flatNumber);
-        arrayOfFlats[flatNumber] = (Flat) flat;
+        arrayOfFlats[flatNumber] = flat;
         return true;
     }
 
@@ -77,12 +80,12 @@ public class DwellingFloor implements Floor {
     public boolean addSpace(int flatNumber, Space newFlat) {
         nullPointerCheck(newFlat);
         indexAddOutCheck(flatNumber);
-        Flat[] newFlats = new Flat[arrayOfFlats.length + 1];
+        Space[] newFlats = new Space[arrayOfFlats.length + 1];
         for (int i = 0, j = 0; i <= arrayOfFlats.length; i++) {
             if (i != flatNumber) {
                 newFlats[i] = arrayOfFlats[j++];
             } else {
-                newFlats[i] = (Flat) newFlat;
+                newFlats[i] = newFlat;
             }
         }
         amountOfFlats++;
@@ -94,7 +97,7 @@ public class DwellingFloor implements Floor {
     @Override
     public boolean deleteSpace(int flatNumber) {
         indexGetAndSetAndDeleteOutCheck(flatNumber);
-        Flat[] newFlats = new Flat[arrayOfFlats.length - 1];
+        Space[] newFlats = new Space[arrayOfFlats.length - 1];
         for (int i = 0, j = 0; i < arrayOfFlats.length; i++) {
             if (i != flatNumber) {
                 newFlats[j++] = arrayOfFlats[i];
@@ -107,9 +110,9 @@ public class DwellingFloor implements Floor {
 
     // Метод получения самой большой по площади квартиры этажа
     @Override
-    public Flat getBestSpace() {
-        Flat flat = arrayOfFlats[0];
-        for (Flat iteratedFlat : arrayOfFlats) {
+    public Space getBestSpace() {
+        Space flat = arrayOfFlats[0];
+        for (Space iteratedFlat : arrayOfFlats) {
             if (iteratedFlat.getArea() > flat.getArea()) {
                 flat = iteratedFlat;
             }
@@ -119,7 +122,7 @@ public class DwellingFloor implements Floor {
 
     // Вывод на экран всех квартир
     public void showAllFlats() {
-        for (Flat flat : arrayOfFlats) {
+        for (Space flat : arrayOfFlats) {
             System.out.println(flat);
         }
     }
@@ -140,5 +143,13 @@ public class DwellingFloor implements Floor {
         if (o == null) {
             throw new NullPointerException();
         }
+    }
+
+    @Override
+    public String toString() {
+        return "DwellingFloor{" +
+                "amountOfFlats=" + amountOfFlats +
+                ", arrayOfFlats=" + Arrays.toString(arrayOfFlats) +
+                '}';
     }
 }
