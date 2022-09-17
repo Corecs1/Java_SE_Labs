@@ -8,6 +8,7 @@ import com.corecs.javase.exceptions.FloorIndexOutOfBoundsException;
 import com.corecs.javase.exceptions.SpaceIndexOutOfBoundsException;
 
 import java.io.Serializable;
+import java.util.Collection;
 
 /*
  *Работа класса основана на двусвязном циклическом списке этажей с выделенной головой.
@@ -30,6 +31,11 @@ public class OfficeBuilding implements Building, Serializable {
         }
     }
 
+    // Конструктор, принимающий коллекцию офисных этажей.
+    public OfficeBuilding(Collection<Floor> floors) {
+        list.addAll(floors);
+    }
+
     //    Метод получения общего количества этажей здания.
     @Override
     public int getFloorsAmount() {
@@ -50,8 +56,8 @@ public class OfficeBuilding implements Building, Serializable {
     @Override
     public double getTotalSpacesArea() {
         double count = 0;
-        for (int i = 0; i < list.size(); i++) {
-            count += list.get(i).getTotalSpaceArea();
+        for (Floor floor : list) {
+            count += floor.getTotalSpaceArea();
         }
         return count;
     }
@@ -60,8 +66,8 @@ public class OfficeBuilding implements Building, Serializable {
     @Override
     public int getTotalRoomsAmount() {
         int count = 0;
-        for (int i = 0; i < list.size(); i++) {
-            count += list.get(i).getTotalAmountOfRooms();
+        for (Floor floor : list) {
+            count += floor.getTotalAmountOfRooms();
         }
         return count;
     }
@@ -102,12 +108,12 @@ public class OfficeBuilding implements Building, Serializable {
             throw new SpaceIndexOutOfBoundsException();
         }
         Space office = null;
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getAmountOfSpaces() > index) {
-                office = list.get(i).getSpace(index);
+        for (Floor floor : list) {
+            if (floor.getAmountOfSpaces() > index) {
+                office = floor.getSpace(index);
                 break;
             } else {
-                index -= list.get(i).getAmountOfSpaces();
+                index -= floor.getAmountOfSpaces();
             }
         }
         return office;
@@ -119,12 +125,12 @@ public class OfficeBuilding implements Building, Serializable {
         if (index >= getSpacesAmount() || index < 0) {
             throw new SpaceIndexOutOfBoundsException();
         }
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getAmountOfSpaces() > index) {
-                list.get(i).setSpace(index, office);
+        for (Floor floor : list) {
+            if (floor.getAmountOfSpaces() > index) {
+                floor.setSpace(index, office);
                 break;
             } else {
-                index -= list.get(i).getAmountOfSpaces();
+                index -= floor.getAmountOfSpaces();
             }
         }
         return true;
@@ -136,12 +142,12 @@ public class OfficeBuilding implements Building, Serializable {
         if (index > getSpacesAmount() || index < 0) {
             throw new SpaceIndexOutOfBoundsException();
         }
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getAmountOfSpaces() >= index) {
-                list.get(i).addSpace(index, office);
+        for (Floor floor : list) {
+            if (floor.getAmountOfSpaces() >= index) {
+                floor.addSpace(index, office);
                 break;
             } else {
-                index -= list.get(i).getAmountOfSpaces();
+                index -= floor.getAmountOfSpaces();
             }
         }
         return true;
@@ -153,12 +159,12 @@ public class OfficeBuilding implements Building, Serializable {
         if (index >= getSpacesAmount() || index < 0) {
             throw new SpaceIndexOutOfBoundsException();
         }
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getAmountOfSpaces() > index) {
-                list.get(i).deleteSpace(index);
+        for (Floor floor : list) {
+            if (floor.getAmountOfSpaces() > index) {
+                floor.deleteSpace(index);
                 break;
             } else {
-                index -= list.get(i).getAmountOfSpaces();
+                index -= floor.getAmountOfSpaces();
             }
         }
         return true;
@@ -168,9 +174,9 @@ public class OfficeBuilding implements Building, Serializable {
     @Override
     public Space getBestSpace() {
         Space office = new Office();
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getBestSpace().getArea() > office.getArea()) {
-                office = list.get(i).getBestSpace();
+        for (Floor floor : list) {
+            if (floor.getBestSpace().getArea() > office.getArea()) {
+                office = floor.getBestSpace();
             }
         }
         return office;
@@ -204,8 +210,8 @@ public class OfficeBuilding implements Building, Serializable {
     @Override
     public String toString() {
         String resultString = "";
-        for (int i = 0; i < list.size(); i++) {
-            resultString += "{" + list.get(i).toString() + "}, ";
+        for (Floor floor : list) {
+            resultString += "{" + floor.toString() + "}, ";
         }
         return resultString;
     }

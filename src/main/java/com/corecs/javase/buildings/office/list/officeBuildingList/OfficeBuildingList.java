@@ -1,7 +1,6 @@
 package com.corecs.javase.buildings.office.list.officeBuildingList;
 
 import com.corecs.javase.buildings.interfaces.Floor;
-import com.corecs.javase.buildings.office.OfficeFloor;
 import com.corecs.javase.exceptions.SpaceIndexOutOfBoundsException;
 
 import java.io.Serializable;
@@ -18,6 +17,11 @@ public class OfficeBuildingList implements List<Floor>, Serializable {
 
     public OfficeBuildingList() {
         initHead();
+    }
+
+    public OfficeBuildingList(Collection<Floor> list) {
+        this();
+        addAll(list);
     }
 
     private void initHead() {
@@ -43,7 +47,24 @@ public class OfficeBuildingList implements List<Floor>, Serializable {
 
     @Override
     public Iterator<Floor> iterator() {
-        return null;
+        Iterator<Floor> iter = new Iterator<Floor>() {
+            Node ref = head;
+
+            @Override
+            public boolean hasNext() {
+                if (ref == null) return false;
+                if (ref.next == null) return false;
+                return !ref.next.equals(head);
+            }
+
+            @Override
+            public Floor next() {
+                Node current = ref.next;
+                ref = ref.next;
+                return current.officeFloor;
+            }
+        };
+        return iter;
     }
 
     @Override
@@ -53,7 +74,7 @@ public class OfficeBuildingList implements List<Floor>, Serializable {
         for (Node ref = this.head.next; ref != this.head; ref = ref.next) {
             officeFloors[count++] = ref.officeFloor;
         }
-        return new Object[0];
+        return officeFloors;
     }
 
     @Override

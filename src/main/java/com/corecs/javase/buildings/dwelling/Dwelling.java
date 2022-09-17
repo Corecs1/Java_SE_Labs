@@ -11,7 +11,7 @@ import java.util.Arrays;
 
 
 public class Dwelling implements Building, Serializable {
-    private DwellingFloor[] dwellingFloors;
+    private Floor[] dwellingFloors;
     private int amountOfDwellingFloors;
 
     // Конструктор принимающий количество этажей и массив количества квартир по этажам.
@@ -24,7 +24,7 @@ public class Dwelling implements Building, Serializable {
     }
 
     // Конструктор принимающий массив этажей дома.
-    public Dwelling(DwellingFloor[] dwellingFloors) {
+    public Dwelling(Floor[] dwellingFloors) {
         nullPointerCheck(dwellingFloors);
         this.dwellingFloors = dwellingFloors;
         this.amountOfDwellingFloors = dwellingFloors.length;
@@ -40,7 +40,7 @@ public class Dwelling implements Building, Serializable {
     @Override
     public int getSpacesAmount() {
         int flatCount = 0;
-        for (DwellingFloor dwellingFloor : dwellingFloors) {
+        for (Floor dwellingFloor : dwellingFloors) {
             flatCount += dwellingFloor.getAmountOfSpaces();
         }
         return flatCount;
@@ -50,7 +50,7 @@ public class Dwelling implements Building, Serializable {
     @Override
     public double getTotalSpacesArea() {
         double flatAreaCount = 0;
-        for (DwellingFloor dwellingFloor : dwellingFloors) {
+        for (Floor dwellingFloor : dwellingFloors) {
             flatAreaCount += dwellingFloor.getTotalSpaceArea();
         }
         return flatAreaCount;
@@ -60,7 +60,7 @@ public class Dwelling implements Building, Serializable {
     @Override
     public int getTotalRoomsAmount() {
         int flatRoomsCount = 0;
-        for (DwellingFloor dwellingFloor : dwellingFloors) {
+        for (Floor dwellingFloor : dwellingFloors) {
             flatRoomsCount += dwellingFloor.getTotalAmountOfRooms();
         }
         return flatRoomsCount;
@@ -68,13 +68,13 @@ public class Dwelling implements Building, Serializable {
 
     //    Метод получения массива этажей жилого дома.
     @Override
-    public DwellingFloor[] getFloorsArray() {
+    public Floor[] getFloorsArray() {
         return dwellingFloors;
     }
 
     //    Метод получения объекта этажа, по его номеру в доме.
     @Override
-    public DwellingFloor getFloor(int floorNumber) {
+    public Floor getFloor(int floorNumber) {
         indexGetAndSetOutFloorCheck(floorNumber);
         return dwellingFloors[floorNumber];
     }
@@ -84,16 +84,16 @@ public class Dwelling implements Building, Serializable {
     public boolean setFloor(int floorNumber, Floor newDwellingFloor) {
         nullPointerCheck(newDwellingFloor);
         indexGetAndSetOutFloorCheck(floorNumber);
-        dwellingFloors[floorNumber] = (DwellingFloor) newDwellingFloor;
+        dwellingFloors[floorNumber] = newDwellingFloor;
         return true;
     }
 
     //    Метод получения объекта квартиры по ее номеру в доме.
     @Override
-    public Flat getSpace(int flatNumber) {
+    public Space getSpace(int flatNumber) {
         indexGetAndSetAndDeleteOutSpaceCheck(flatNumber);
-        Flat flat = null;
-        for (DwellingFloor dwellingFloor : dwellingFloors) {
+        Space flat = null;
+        for (Floor dwellingFloor : dwellingFloors) {
             if (dwellingFloor.getAmountOfSpaces() > flatNumber) {
                 flat = dwellingFloor.getArrayOfSpaces()[flatNumber];
                 break;
@@ -109,9 +109,9 @@ public class Dwelling implements Building, Serializable {
     public boolean setSpace(int flatNumber, Space flat) {
         nullPointerCheck(flat);
         indexGetAndSetAndDeleteOutSpaceCheck(flatNumber);
-        for (DwellingFloor dwellingFloor : dwellingFloors) {
+        for (Floor dwellingFloor : dwellingFloors) {
             if (dwellingFloor.getAmountOfSpaces() > flatNumber) {
-                dwellingFloor.getArrayOfSpaces()[flatNumber] = (Flat) flat;
+                dwellingFloor.getArrayOfSpaces()[flatNumber] = flat;
                 break;
             } else {
                 flatNumber -= dwellingFloor.getAmountOfSpaces();
@@ -125,7 +125,7 @@ public class Dwelling implements Building, Serializable {
     public boolean addSpace(int flatNumber, Space flat) {
         nullPointerCheck(flat);
         indexAddOutCheck(flatNumber);
-        for (DwellingFloor dwellingFloor : dwellingFloors) {
+        for (Floor dwellingFloor : dwellingFloors) {
             if (dwellingFloor.getAmountOfSpaces() > flatNumber) {
                 dwellingFloor.addSpace(flatNumber, flat);
                 break;
@@ -140,7 +140,7 @@ public class Dwelling implements Building, Serializable {
     @Override
     public boolean removeSpace(int flatNumber) {
         indexGetAndSetAndDeleteOutSpaceCheck(flatNumber);
-        for (DwellingFloor dwellingFloor : dwellingFloors) {
+        for (Floor dwellingFloor : dwellingFloors) {
             if (dwellingFloor.getAmountOfSpaces() > flatNumber) {
                 dwellingFloor.deleteSpace(flatNumber);
             } else {
@@ -152,9 +152,9 @@ public class Dwelling implements Building, Serializable {
 
     //    Метод получения самой большой по площади квартиры дома.
     @Override
-    public Flat getBestSpace() {
-        Flat flat = new Flat();
-        for (DwellingFloor dwellingFloor : dwellingFloors) {
+    public Space getBestSpace() {
+        Space flat = new Flat();
+        for (Floor dwellingFloor : dwellingFloors) {
             if (dwellingFloor.getBestSpace().getArea() > flat.getArea()) {
                 flat = dwellingFloor.getBestSpace();
             }
@@ -164,13 +164,13 @@ public class Dwelling implements Building, Serializable {
 
     //    Метод получения отсортированного по убыванию площадей массива квартир.
     @Override
-    public Flat[] getSpaceArraySortedByArea() {
-        Flat[] newArrayFlats = new Flat[getSpacesAmount()];
+    public Space[] getSpaceArraySortedByArea() {
+        Space[] newArrayFlats = new Space[getSpacesAmount()];
         int count = 0;
         boolean isSort = false;
-        for (int i = 0; i < dwellingFloors.length; i++) {
-            for (int j = 0; j < dwellingFloors[i].getArrayOfSpaces().length; j++) {
-                newArrayFlats[count++] = dwellingFloors[i].getArrayOfSpaces()[j];
+        for (Floor dwellingFloor : dwellingFloors) {
+            for (int j = 0; j < dwellingFloor.getArrayOfSpaces().length; j++) {
+                newArrayFlats[count++] = dwellingFloor.getArrayOfSpaces()[j];
             }
         }
         while (!isSort) {
@@ -178,7 +178,7 @@ public class Dwelling implements Building, Serializable {
             for (int i = 0; i < newArrayFlats.length - 1; i++) {
                 if (newArrayFlats[i].getArea() < newArrayFlats[i + 1].getArea()) {
                     isSort = false;
-                    Flat bufferFlat = newArrayFlats[i];
+                    Space bufferFlat = newArrayFlats[i];
                     newArrayFlats[i] = newArrayFlats[i + 1];
                     newArrayFlats[i + 1] = bufferFlat;
                 }

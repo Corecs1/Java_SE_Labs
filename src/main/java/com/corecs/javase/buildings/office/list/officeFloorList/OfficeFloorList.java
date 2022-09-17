@@ -126,7 +126,7 @@ public class OfficeFloorList implements List<Space>, Serializable {
     // Итератор над листом оффисов
     @Override
     public Iterator<Space> iterator() {
-        Iterator<Space> iter = new Iterator<Space>() {
+        Iterator<Space> iter = new Iterator<>() {
             Node ref = head;
 
             @Override
@@ -221,7 +221,7 @@ public class OfficeFloorList implements List<Space>, Serializable {
             modified = true;
         } else {
             for (Space office : officeList) {
-//                add(index++, office);
+                add(index++, office);
                 modified = true;
             }
         }
