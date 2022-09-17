@@ -147,9 +147,12 @@ public class DwellingFloor implements Floor, Serializable {
 
     @Override
     public String toString() {
-        return "DwellingFloor{" +
-                "amountOfFlats=" + amountOfFlats +
-                ", arrayOfFlats=" + Arrays.toString(arrayOfFlats) +
-                '}';
+        StringBuilder str = new StringBuilder("DwellingFloor (").append(getAmountOfSpaces());
+        for (Space space : arrayOfFlats) {
+            str.append(", ");
+            str.append(space);
+        }
+        str.append(")");
+        return str.toString();
     }
 }

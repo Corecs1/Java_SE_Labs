@@ -209,10 +209,12 @@ public class OfficeBuilding implements Building, Serializable {
 
     @Override
     public String toString() {
-        String resultString = "";
+        StringBuilder str = new StringBuilder("OfficeBuilding (").append(getFloorsAmount());
         for (Floor floor : list) {
-            resultString += "{" + floor.toString() + "}, ";
+            str.append(", ");
+            str.append(floor);
         }
-        return resultString;
+        str.append(")");
+        return str.toString();
     }
 }

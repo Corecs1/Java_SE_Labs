@@ -52,10 +52,12 @@ public class Flat implements Space, Serializable {
 
     @Override
     public String toString() {
-        return "Flat{" +
-                "area=" + area +
-                ", numberOfRooms=" + amountOfRooms +
-                '}';
+        return new StringBuilder("Flat (")
+                .append(amountOfRooms)
+                .append(", ")
+                .append(area)
+                .append(")")
+                .toString();
     }
 }
 

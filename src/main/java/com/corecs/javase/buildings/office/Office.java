@@ -52,9 +52,11 @@ public class Office implements Space, Serializable {
 
     @Override
     public String toString() {
-        return "Office{" +
-                "area=" + area +
-                ", amountOfRooms=" + amountOfRooms +
-                '}';
+        return new StringBuilder("Office (")
+                .append(amountOfRooms)
+                .append(", ")
+                .append(area)
+                .append(")")
+                .toString();
     }
 }

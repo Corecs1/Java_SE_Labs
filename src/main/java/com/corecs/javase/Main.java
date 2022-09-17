@@ -1,6 +1,7 @@
 package com.corecs.javase;
 
 import com.corecs.javase.buildings.Buildings;
+import com.corecs.javase.buildings.dwelling.Dwelling;
 import com.corecs.javase.buildings.factory.OfficeFactory;
 import com.corecs.javase.buildings.interfaces.BuildingFactory;
 import com.corecs.javase.buildings.interfaces.Space;
@@ -56,5 +57,9 @@ public class Main {
 
         System.out.println("Start deserialize");
         System.out.println(Buildings.deserializableBuilding(new FileInputStream("src\\main\\resources\\OutputSerializable.bin")));
+
+        int[] floors = {5,2,2,1};
+        Dwelling dwelling = new Dwelling(4, floors);
+        System.out.println(dwelling);
     }
 }

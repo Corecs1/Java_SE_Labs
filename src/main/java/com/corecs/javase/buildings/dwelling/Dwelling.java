@@ -213,10 +213,13 @@ public class Dwelling implements Building, Serializable {
 
     @Override
     public String toString() {
-        return "Dwelling{" +
-                "dwellingFloors=" + Arrays.toString(dwellingFloors) +
-                ", amountOfDwellingFloors=" + amountOfDwellingFloors +
-                '}';
+        StringBuilder str = new StringBuilder("Dwelling (").append(getFloorsAmount());
+        for (Floor floor : dwellingFloors) {
+            str.append(", ");
+            str.append(floor);
+        }
+        str.append(")");
+        return str.toString();
     }
 }
 

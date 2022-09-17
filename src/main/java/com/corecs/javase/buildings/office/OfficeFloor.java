@@ -122,7 +122,12 @@ public class OfficeFloor implements Floor, Serializable {
 
     @Override
     public String toString() {
-        Space[] offices = (Space[]) list.toArray();
-        return Arrays.toString(offices);
+        StringBuilder str = new StringBuilder("OfficeFloor (").append(getAmountOfSpaces());
+        for (Space space : list) {
+            str.append(", ");
+            str.append(space);
+        }
+        str.append(")");
+        return str.toString();
     }
 }
