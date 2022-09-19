@@ -8,4 +8,6 @@ public interface Space {
     double getArea();
 
     void setArea(double area);
+
+    Object clone();
 }

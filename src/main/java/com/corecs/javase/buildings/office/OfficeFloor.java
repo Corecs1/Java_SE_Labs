@@ -134,6 +134,20 @@ public class OfficeFloor implements Floor, Serializable {
     }
 
     @Override
+    public Object clone() {
+        Floor clone;
+        try {
+            clone = (Floor) super.clone();
+            for (int i = 0; i < clone.getAmountOfSpaces(); i++) {
+                clone.setSpace(i, (Space) clone.getSpace(i).clone());
+            }
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
+        return clone;
+    }
+
+    @Override
     public String toString() {
         StringBuilder str = new StringBuilder("OfficeFloor (").append(getAmountOfSpaces());
         for (Space space : list) {

@@ -222,6 +222,23 @@ public class OfficeBuilding implements Building, Serializable {
     }
 
     @Override
+    public Object clone() {
+        Building clone;
+        try {
+            clone = (Building) super.clone();
+            for (int i = 0; i < clone.getFloorsAmount(); i++) {
+                clone.setFloor(i, (Floor) clone.getFloor(i).clone());
+                for (int j = 0; j < clone.getFloor(i).getAmountOfSpaces(); j++) {
+                    clone.getFloor(i).setSpace(j, (Space) clone.getSpace(j).clone());
+                }
+            }
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
+        return clone;
+    }
+
+    @Override
     public String toString() {
         StringBuilder str = new StringBuilder("OfficeBuilding (").append(getFloorsAmount());
         for (Floor floor : list) {
