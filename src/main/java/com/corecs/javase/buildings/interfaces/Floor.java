@@ -18,4 +18,6 @@ public interface Floor {
     boolean deleteSpace(int number);
 
     Space getBestSpace();
+
+    Object clone();
 }

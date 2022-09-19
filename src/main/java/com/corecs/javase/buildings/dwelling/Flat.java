@@ -65,6 +65,15 @@ public class Flat implements Space, Serializable {
     }
 
     @Override
+    public Object clone() {
+        try {
+            return super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public String toString() {
         return new StringBuilder("Flat (")
                 .append(amountOfRooms)

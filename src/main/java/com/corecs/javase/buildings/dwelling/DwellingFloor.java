@@ -147,17 +147,6 @@ public class DwellingFloor implements Floor, Serializable {
     }
 
     @Override
-    public String toString() {
-        StringBuilder str = new StringBuilder("DwellingFloor (").append(getAmountOfSpaces());
-        for (Space space : arrayOfFlats) {
-            str.append(", ");
-            str.append(space);
-        }
-        str.append(")");
-        return str.toString();
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -170,5 +159,30 @@ public class DwellingFloor implements Floor, Serializable {
         int result = Objects.hash(amountOfFlats);
         result = 31 * result + Arrays.hashCode(arrayOfFlats);
         return result;
+    }
+
+    @Override
+    public Object clone() {
+        Floor clone;
+        try {
+            clone = (Floor) super.clone();
+            for (int i = 0; i < clone.getAmountOfSpaces(); i++) {
+                clone.setSpace(i, (Space) clone.getSpace(i).clone());
+            }
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
+        return clone;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder str = new StringBuilder("DwellingFloor (").append(getAmountOfSpaces());
+        for (Space space : arrayOfFlats) {
+            str.append(", ");
+            str.append(space);
+        }
+        str.append(")");
+        return str.toString();
     }
 }
