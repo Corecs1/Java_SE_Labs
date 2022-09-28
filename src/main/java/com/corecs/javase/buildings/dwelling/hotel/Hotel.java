@@ -1,19 +1,17 @@
 package com.corecs.javase.buildings.dwelling.hotel;
 
 import com.corecs.javase.buildings.dwelling.Dwelling;
-import com.corecs.javase.buildings.dwelling.Flat;
-import com.corecs.javase.buildings.interfaces.Building;
 import com.corecs.javase.buildings.interfaces.Floor;
 import com.corecs.javase.buildings.interfaces.Space;
 
 public class Hotel extends Dwelling {
 
-    public Hotel(int amountOfDwellingFloors, int[] arrayAmountOfFlats) {
-        super(amountOfDwellingFloors, arrayAmountOfFlats);
+    public Hotel(int amountOfHotelFloors, int[] arrayAmountOfFlats) {
+        super(amountOfHotelFloors, arrayAmountOfFlats);
     }
 
-    public Hotel(Floor[] dwellingFloors) {
-        super(dwellingFloors);
+    public Hotel(Floor[] hotelFloors) {
+        super(hotelFloors);
     }
 
     // Метод позволяет узнать показатель «количество звезд» всего отеля.
@@ -30,13 +28,13 @@ public class Hotel extends Dwelling {
     // Метод получения лучшего номера отеля.
     @Override
     public Space getBestSpace() {
-        Space hotel = new Flat();
+        Space hotel = null;
         double areaCoefficientMultiplying = 0;
         for (Floor floor : super.getFloorsArray()) {
             if (floor instanceof HotelFloor) {
                 double coefficient = getCoefficient(((HotelFloor) floor).getStars());
                 double area = floor.getBestSpace().getArea();
-                hotel = coefficient * area > areaCoefficientMultiplying ? (Space) floor : hotel;
+                hotel = coefficient * area > areaCoefficientMultiplying ? floor.getBestSpace() : hotel;
                 areaCoefficientMultiplying = coefficient * area;
             }
         }
@@ -54,7 +52,17 @@ public class Hotel extends Dwelling {
 
     @Override
     public String toString() {
-
-        return null;
+        StringBuilder str = new StringBuilder("Hotel (")
+                .append(hotelStars())
+                .append(", ")
+                .append(getFloorsAmount());
+        for (Floor floor : getFloorsArray()) {
+            if (floor instanceof HotelFloor) {
+                str.append(", ");
+                str.append(floor);
+            }
+        }
+        str.append(")");
+        return str.toString();
     }
 }
