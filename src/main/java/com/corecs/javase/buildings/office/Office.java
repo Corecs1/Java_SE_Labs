@@ -2,10 +2,9 @@ package com.corecs.javase.buildings.office;
 
 import com.corecs.javase.buildings.interfaces.Space;
 
-import java.io.Serializable;
 import java.util.Objects;
 
-public class Office implements Space, Serializable {
+public class Office implements Space {
     private double area;
     private int amountOfRooms;
     private static final int DEFAULT_AREA = 250;
@@ -81,5 +80,10 @@ public class Office implements Space, Serializable {
                 .append(area)
                 .append(")")
                 .toString();
+    }
+
+    @Override
+    public int compareTo(Space space) {
+        return Double.compare(this.area, space.getArea());
     }
 }

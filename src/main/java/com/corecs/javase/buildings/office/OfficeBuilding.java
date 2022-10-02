@@ -7,7 +7,6 @@ import com.corecs.javase.buildings.office.list.officeBuildingList.OfficeBuilding
 import com.corecs.javase.exceptions.FloorIndexOutOfBoundsException;
 import com.corecs.javase.exceptions.SpaceIndexOutOfBoundsException;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -15,7 +14,7 @@ import java.util.Objects;
  *Работа класса основана на двусвязном циклическом списке этажей с выделенной головой.
  */
 
-public class OfficeBuilding implements Building, Serializable {
+public class OfficeBuilding implements Building {
     private OfficeBuildingList list = new OfficeBuildingList();
 
     //    Конструктор, принимающий количество этажей и массив количества офисов по этажам.

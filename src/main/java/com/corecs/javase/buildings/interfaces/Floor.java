@@ -1,6 +1,8 @@
 package com.corecs.javase.buildings.interfaces;
 
-public interface Floor {
+import java.io.Serializable;
+
+public interface Floor extends Serializable, Cloneable, Comparable<Floor> {
     int getAmountOfSpaces();
 
     double getTotalSpaceArea();
@@ -20,4 +22,6 @@ public interface Floor {
     Space getBestSpace();
 
     Object clone();
+
+    int compareTo(Floor floor);
 }

@@ -5,7 +5,6 @@ import com.corecs.javase.buildings.interfaces.Space;
 import com.corecs.javase.buildings.office.list.officeFloorList.OfficeFloorList;
 import com.corecs.javase.exceptions.SpaceIndexOutOfBoundsException;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -13,7 +12,7 @@ import java.util.Objects;
  * Работа класса основана на односвязном циклическом списке офисов с выделенной головой
  */
 
-public class OfficeFloor implements Floor, Serializable {
+public class OfficeFloor implements Floor {
     private OfficeFloorList list = new OfficeFloorList();
 
     // Конструктор, принимающий количество офисов на этаже.
@@ -145,6 +144,11 @@ public class OfficeFloor implements Floor, Serializable {
             throw new RuntimeException(e);
         }
         return clone;
+    }
+
+    @Override
+    public int compareTo(Floor floor) {
+        return Integer.compare(this.getAmountOfSpaces(), floor.getAmountOfSpaces());
     }
 
     @Override

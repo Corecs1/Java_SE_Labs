@@ -4,11 +4,11 @@ import com.corecs.javase.buildings.interfaces.Floor;
 import com.corecs.javase.buildings.interfaces.Space;
 import com.corecs.javase.exceptions.SpaceIndexOutOfBoundsException;
 
-import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Objects;
 
-public class DwellingFloor implements Floor, Serializable {
+public class DwellingFloor implements Floor {
     private int amountOfFlats;
     private Space[] arrayOfFlats;
 
@@ -173,6 +173,11 @@ public class DwellingFloor implements Floor, Serializable {
             throw new RuntimeException(e);
         }
         return clone;
+    }
+
+    @Override
+    public int compareTo(Floor floor) {
+        return Integer.compare(this.getAmountOfSpaces(), floor.getAmountOfSpaces());
     }
 
     @Override

@@ -6,12 +6,11 @@ import com.corecs.javase.buildings.interfaces.Space;
 import com.corecs.javase.exceptions.FloorIndexOutOfBoundsException;
 import com.corecs.javase.exceptions.SpaceIndexOutOfBoundsException;
 
-import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Objects;
 
 
-public class Dwelling implements Building, Serializable {
+public class Dwelling implements Building {
     private Floor[] dwellingFloors;
     private int amountOfDwellingFloors;
 

@@ -1,21 +1,16 @@
 package com.corecs.javase;
 
-import com.corecs.javase.buildings.Buildings;
-import com.corecs.javase.buildings.dwelling.Dwelling;
 import com.corecs.javase.buildings.dwelling.DwellingFloor;
 import com.corecs.javase.buildings.dwelling.Flat;
-import com.corecs.javase.buildings.dwelling.hotel.Hotel;
 import com.corecs.javase.buildings.dwelling.hotel.HotelFloor;
-import com.corecs.javase.buildings.factory.OfficeFactory;
-import com.corecs.javase.buildings.interfaces.Building;
-import com.corecs.javase.buildings.interfaces.BuildingFactory;
 import com.corecs.javase.buildings.interfaces.Floor;
 import com.corecs.javase.buildings.interfaces.Space;
-import com.corecs.javase.buildings.office.Office;
-import com.corecs.javase.buildings.office.OfficeBuilding;
-import com.corecs.javase.buildings.office.OfficeFloor;
+import com.corecs.javase.buildings.threads.Cleaner;
+import com.corecs.javase.buildings.threads.Repairer;
+import com.corecs.javase.buildings.threads.SequentialCleaner;
+import com.corecs.javase.buildings.threads.SequentialRepairer;
 
-import java.io.*;
+import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -68,21 +63,46 @@ public class Main {
 //        Dwelling dwelling = new Dwelling(4, floors);
 //        System.out.println(dwelling);
 
-        Space[] spaces1 = {new Flat(150,2), new Flat(200,3), new Flat(180,1)};
+        Space[] spaces1 = {new Flat(150, 2), new Flat(200, 3), new Flat(180, 1)};
         HotelFloor hotelFloor1 = new HotelFloor(spaces1);
         hotelFloor1.setStars(5);
-        Space[] spaces2 = {new Flat(100,1), new Flat(200,4), new Flat(150,2)};
+        Space[] spaces2 = {new Flat(100, 1), new Flat(200, 4), new Flat(150, 2), new Flat(400, 5)};
         HotelFloor hotelFloor2 = new HotelFloor(spaces2);
         hotelFloor2.setStars(4);
-        Space[] spaces3 = {new Flat(150,2), new Flat(200,2), new Flat(280,4)};
+        Space[] spaces3 = {new Flat(150, 2), new Flat(200, 2)};
         HotelFloor hotelFloor3 = new HotelFloor(spaces3);
         hotelFloor3.setStars(4);
-        Space[] spaces4 = {new Flat(550,2), new Flat(300,2), new Flat(580,4)};
+        Space[] spaces4 = {new Flat(550, 2), new Flat(300, 2), new Flat(580, 4)};
         DwellingFloor dwellingFloor4 = new DwellingFloor(spaces4);
         Floor[] floors = {hotelFloor1, dwellingFloor4, hotelFloor2, hotelFloor3};
 
-        Hotel hotel = new Hotel(floors);
-        System.out.println(hotel);
-        System.out.println(hotel.getBestSpace());
+//        Hotel hotel = new Hotel(floors);
+//        System.out.println(hotel);
+//        System.out.println(hotel.getBestSpace());
+//
+//        for (Floor floor: floors) {
+//            System.out.print(floor + " ---> ");
+//        }
+//        System.out.println();
+//        Arrays.sort(floors);
+//        for (Floor floor: floors) {
+//            System.out.print(floor + " ---> ");
+//        }
+
+//        Thread repairer = new Repairer(dwellingFloor4);
+//        repairer.interrupt();
+//        Thread cleaner = new Cleaner(dwellingFloor4);
+//
+//        repairer.start();
+//        cleaner.start();
+
+        SequentialRepairer sequentialRepairer = new SequentialRepairer(dwellingFloor4);
+        SequentialCleaner sequentialCleaner = new SequentialCleaner(dwellingFloor4);
+
+        Thread thread1 = new Thread(sequentialRepairer);
+        Thread thread2 = new Thread(sequentialCleaner);
+
+        thread2.start();
+        thread1.start();
     }
 }

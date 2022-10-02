@@ -1,6 +1,8 @@
 package com.corecs.javase.buildings.interfaces;
 
-public interface Building {
+import java.io.Serializable;
+
+public interface Building extends Serializable, Cloneable {
     int getFloorsAmount();
 
     int getSpacesAmount();

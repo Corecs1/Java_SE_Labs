@@ -1,6 +1,8 @@
 package com.corecs.javase.buildings.interfaces;
 
-public interface Space {
+import java.io.Serializable;
+
+public interface Space extends Serializable, Cloneable, Comparable<Space> {
     int getAmountOfRooms();
 
     void setAmountOfRooms(int amountOfRooms);
@@ -10,4 +12,6 @@ public interface Space {
     void setArea(double area);
 
     Object clone();
+
+    int compareTo(Space space);
 }
