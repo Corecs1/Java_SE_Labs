@@ -5,15 +5,14 @@ import com.corecs.javase.buildings.interfaces.Space;
 import com.corecs.javase.buildings.office.list.officeFloorList.OfficeFloorList;
 import com.corecs.javase.exceptions.SpaceIndexOutOfBoundsException;
 
-import java.io.Serializable;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Objects;
 
 /*
  * Работа класса основана на односвязном циклическом списке офисов с выделенной головой
  */
 
-public class OfficeFloor implements Floor, Serializable {
+public class OfficeFloor implements Floor {
     private OfficeFloorList list = new OfficeFloorList();
 
     // Конструктор, принимающий количество офисов на этаже.
@@ -121,8 +120,45 @@ public class OfficeFloor implements Floor, Serializable {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OfficeFloor that = (OfficeFloor) o;
+        return list.equals(that.list);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(list);
+    }
+
+    @Override
+    public Object clone() {
+        Floor clone;
+        try {
+            clone = (Floor) super.clone();
+            for (int i = 0; i < clone.getAmountOfSpaces(); i++) {
+                clone.setSpace(i, (Space) clone.getSpace(i).clone());
+            }
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
+        return clone;
+    }
+
+    @Override
+    public int compareTo(Floor floor) {
+        return Integer.compare(this.getAmountOfSpaces(), floor.getAmountOfSpaces());
+    }
+
+    @Override
     public String toString() {
-        Space[] offices = (Space[]) list.toArray();
-        return Arrays.toString(offices);
+        StringBuilder str = new StringBuilder("OfficeFloor (").append(getAmountOfSpaces());
+        for (Space space : list) {
+            str.append(", ");
+            str.append(space);
+        }
+        str.append(")");
+        return str.toString();
     }
 }

@@ -4,10 +4,11 @@ import com.corecs.javase.buildings.interfaces.Floor;
 import com.corecs.javase.buildings.interfaces.Space;
 import com.corecs.javase.exceptions.SpaceIndexOutOfBoundsException;
 
-import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.Objects;
 
-public class DwellingFloor implements Floor, Serializable {
+public class DwellingFloor implements Floor {
     private int amountOfFlats;
     private Space[] arrayOfFlats;
 
@@ -146,10 +147,47 @@ public class DwellingFloor implements Floor, Serializable {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DwellingFloor that = (DwellingFloor) o;
+        return amountOfFlats == that.amountOfFlats && Arrays.equals(arrayOfFlats, that.arrayOfFlats);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(amountOfFlats);
+        result = 31 * result + Arrays.hashCode(arrayOfFlats);
+        return result;
+    }
+
+    @Override
+    public Object clone() {
+        Floor clone;
+        try {
+            clone = (Floor) super.clone();
+            for (int i = 0; i < clone.getAmountOfSpaces(); i++) {
+                clone.setSpace(i, (Space) clone.getSpace(i).clone());
+            }
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
+        return clone;
+    }
+
+    @Override
+    public int compareTo(Floor floor) {
+        return Integer.compare(this.getAmountOfSpaces(), floor.getAmountOfSpaces());
+    }
+
+    @Override
     public String toString() {
-        return "DwellingFloor{" +
-                "amountOfFlats=" + amountOfFlats +
-                ", arrayOfFlats=" + Arrays.toString(arrayOfFlats) +
-                '}';
+        StringBuilder str = new StringBuilder("DwellingFloor (").append(getAmountOfSpaces());
+        for (Space space : arrayOfFlats) {
+            str.append(", ");
+            str.append(space);
+        }
+        str.append(")");
+        return str.toString();
     }
 }

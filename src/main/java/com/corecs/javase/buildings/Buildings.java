@@ -7,6 +7,7 @@ import com.corecs.javase.buildings.interfaces.Floor;
 import com.corecs.javase.buildings.interfaces.Space;
 
 import java.io.*;
+import java.util.Arrays;
 
 public class Buildings implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -133,6 +134,18 @@ public class Buildings implements Serializable {
         PrintWriter writer = new PrintWriter(out);
         writer.println(building);
         writer.close();
+    }
+    
+    public Space[] spaceSort(Space[] spaces) {
+        Space[] sortedSpaces = spaces.clone();
+        Arrays.sort(sortedSpaces);
+        return sortedSpaces;
+    }
+
+    public Floor[] floorSort(Floor[] floors) {
+        Floor[] sortedFloors = floors.clone();
+        Arrays.sort(sortedFloors);
+        return sortedFloors;
     }
 
     private static void nullPointerCheck(Object o) {

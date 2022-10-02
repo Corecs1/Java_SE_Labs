@@ -6,11 +6,11 @@ import com.corecs.javase.buildings.interfaces.Space;
 import com.corecs.javase.exceptions.FloorIndexOutOfBoundsException;
 import com.corecs.javase.exceptions.SpaceIndexOutOfBoundsException;
 
-import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Objects;
 
 
-public class Dwelling implements Building, Serializable {
+public class Dwelling implements Building {
     private Floor[] dwellingFloors;
     private int amountOfDwellingFloors;
 
@@ -212,11 +212,46 @@ public class Dwelling implements Building, Serializable {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Dwelling dwelling = (Dwelling) o;
+        return amountOfDwellingFloors == dwelling.amountOfDwellingFloors && Arrays.equals(dwellingFloors, dwelling.dwellingFloors);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(amountOfDwellingFloors);
+        result = 31 * result + Arrays.hashCode(dwellingFloors);
+        return result;
+    }
+
+    @Override
+    public Object clone() {
+        Building clone;
+        try {
+            clone = (Building) super.clone();
+            for (int i = 0; i < clone.getFloorsAmount(); i++) {
+                clone.setFloor(i, (Floor) clone.getFloor(i).clone());
+                for (int j = 0; j < clone.getFloor(i).getAmountOfSpaces(); j++) {
+                    clone.getFloor(i).setSpace(j, (Space) clone.getSpace(j).clone());
+                }
+            }
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
+        return clone;
+    }
+
+    @Override
     public String toString() {
-        return "Dwelling{" +
-                "dwellingFloors=" + Arrays.toString(dwellingFloors) +
-                ", amountOfDwellingFloors=" + amountOfDwellingFloors +
-                '}';
+        StringBuilder str = new StringBuilder("Dwelling (").append(getFloorsAmount());
+        for (Floor floor : dwellingFloors) {
+            str.append(", ");
+            str.append(floor);
+        }
+        str.append(")");
+        return str.toString();
     }
 }
 

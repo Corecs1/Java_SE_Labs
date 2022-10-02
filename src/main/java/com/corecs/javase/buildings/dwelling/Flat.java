@@ -2,9 +2,9 @@ package com.corecs.javase.buildings.dwelling;
 
 import com.corecs.javase.buildings.interfaces.Space;
 
-import java.io.Serializable;
+import java.util.Objects;
 
-public class Flat implements Space, Serializable {
+public class Flat implements Space {
     private double area;
     private int amountOfRooms;
     private static final int DEFAULT_AREA = 50;
@@ -51,11 +51,40 @@ public class Flat implements Space, Serializable {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Flat flat = (Flat) o;
+        return Double.compare(flat.area, area) == 0 && amountOfRooms == flat.amountOfRooms;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(area, amountOfRooms);
+    }
+
+    @Override
+    public Object clone() {
+        try {
+            return super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public int compareTo(Space space) {
+        return Double.compare(this.area, space.getArea());
+    }
+
+    @Override
     public String toString() {
-        return "Flat{" +
-                "area=" + area +
-                ", numberOfRooms=" + amountOfRooms +
-                '}';
+        return new StringBuilder("Flat (")
+                .append(amountOfRooms)
+                .append(", ")
+                .append(area)
+                .append(")")
+                .toString();
     }
 }
 

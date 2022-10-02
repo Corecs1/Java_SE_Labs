@@ -2,9 +2,9 @@ package com.corecs.javase.buildings.office;
 
 import com.corecs.javase.buildings.interfaces.Space;
 
-import java.io.Serializable;
+import java.util.Objects;
 
-public class Office implements Space, Serializable {
+public class Office implements Space {
     private double area;
     private int amountOfRooms;
     private static final int DEFAULT_AREA = 250;
@@ -51,10 +51,39 @@ public class Office implements Space, Serializable {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Office office = (Office) o;
+        return Double.compare(office.area, area) == 0 && amountOfRooms == office.amountOfRooms;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(area, amountOfRooms);
+    }
+
+    @Override
+    public Object clone() {
+        try {
+            return super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public String toString() {
-        return "Office{" +
-                "area=" + area +
-                ", amountOfRooms=" + amountOfRooms +
-                '}';
+        return new StringBuilder("Office (")
+                .append(amountOfRooms)
+                .append(", ")
+                .append(area)
+                .append(")")
+                .toString();
+    }
+
+    @Override
+    public int compareTo(Space space) {
+        return Double.compare(this.area, space.getArea());
     }
 }

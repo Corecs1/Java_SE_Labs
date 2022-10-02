@@ -7,14 +7,14 @@ import com.corecs.javase.buildings.office.list.officeBuildingList.OfficeBuilding
 import com.corecs.javase.exceptions.FloorIndexOutOfBoundsException;
 import com.corecs.javase.exceptions.SpaceIndexOutOfBoundsException;
 
-import java.io.Serializable;
 import java.util.Collection;
+import java.util.Objects;
 
 /*
  *Работа класса основана на двусвязном циклическом списке этажей с выделенной головой.
  */
 
-public class OfficeBuilding implements Building, Serializable {
+public class OfficeBuilding implements Building {
     private OfficeBuildingList list = new OfficeBuildingList();
 
     //    Конструктор, принимающий количество этажей и массив количества офисов по этажам.
@@ -208,11 +208,43 @@ public class OfficeBuilding implements Building, Serializable {
     }
 
     @Override
-    public String toString() {
-        String resultString = "";
-        for (Floor floor : list) {
-            resultString += "{" + floor.toString() + "}, ";
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OfficeBuilding that = (OfficeBuilding) o;
+        return list.equals(that.list);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(list);
+    }
+
+    @Override
+    public Object clone() {
+        Building clone;
+        try {
+            clone = (Building) super.clone();
+            for (int i = 0; i < clone.getFloorsAmount(); i++) {
+                clone.setFloor(i, (Floor) clone.getFloor(i).clone());
+                for (int j = 0; j < clone.getFloor(i).getAmountOfSpaces(); j++) {
+                    clone.getFloor(i).setSpace(j, (Space) clone.getSpace(j).clone());
+                }
+            }
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
         }
-        return resultString;
+        return clone;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder str = new StringBuilder("OfficeBuilding (").append(getFloorsAmount());
+        for (Floor floor : list) {
+            str.append(", ");
+            str.append(floor);
+        }
+        str.append(")");
+        return str.toString();
     }
 }
