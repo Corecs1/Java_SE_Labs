@@ -135,7 +135,7 @@ public class Buildings implements Serializable {
         writer.println(building);
         writer.close();
     }
-    
+
     public Space[] spaceSort(Space[] spaces) {
         Space[] sortedSpaces = spaces.clone();
         Arrays.sort(sortedSpaces);
@@ -146,6 +146,10 @@ public class Buildings implements Serializable {
         Floor[] sortedFloors = floors.clone();
         Arrays.sort(sortedFloors);
         return sortedFloors;
+    }
+
+    public Floor synchronizedFloor(Floor floor) {
+        return new SynchronizedFloor(floor);
     }
 
     private static void nullPointerCheck(Object o) {
