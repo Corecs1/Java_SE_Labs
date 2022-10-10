@@ -8,6 +8,7 @@ import com.corecs.javase.buildings.interfaces.Space;
 
 import java.io.*;
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class Buildings implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -146,6 +147,44 @@ public class Buildings implements Serializable {
         Floor[] sortedFloors = floors.clone();
         Arrays.sort(sortedFloors);
         return sortedFloors;
+    }
+
+    public Space[] spaceSort(Space[] spaces, Comparator<Space> comparator) {
+        Space bufferSpace;
+        for (int i = 0; i < spaces.length - 1; i++) {
+            for (int j = i + 1; j < spaces.length; j++) {
+                if (comparator.compare(spaces[i], spaces[j]) > 0) {
+                    bufferSpace = spaces[i];
+                    spaces[i] = spaces[j];
+                    spaces[j] = bufferSpace;
+                }
+            }
+        }
+        return spaces;
+    }
+
+    public Floor[] floorSort(Floor[] floors, Comparator<Floor> comparator) {
+        Floor bufferFloor;
+        for (int i = 0; i < floors.length - 1; i++) {
+            for (int j = i + 1; j < floors.length; j++) {
+                if (comparator.compare(floors[i], floors[j]) > 0) {
+                    bufferFloor = floors[i];
+                    floors[i] = floors[j];
+                    floors[j] = bufferFloor;
+                }
+            }
+        }
+        return floors;
+    }
+
+    public <T> T[] sort(T[] t) {
+        if (t instanceof Floor[]) {
+            return (T[]) floorSort((Floor[]) t);
+        }
+        if (t instanceof Space[]) {
+            return (T[]) spaceSort((Space[]) t);
+        }
+        return null;
     }
 
     public Floor synchronizedFloor(Floor floor) {

@@ -5,7 +5,6 @@ import com.corecs.javase.buildings.interfaces.Space;
 import com.corecs.javase.exceptions.SpaceIndexOutOfBoundsException;
 
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.Objects;
 
 public class DwellingFloor implements Floor {
